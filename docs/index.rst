@@ -14,11 +14,13 @@ Welcome to BAETYL's documentation!
 Baetyl, extend cloud computing, data and service seamlessly to edge devices.
 
 .. toctree::
+   BAETYL Home <https://baetyl.io>
+
+.. toctree::
    :maxdepth: 2
    :caption: Overview
    
    overview/Whatis.md
-   overview/Advantages.md
    overview/Design.md
    overview/Framework.md
    overview/Extension.md
