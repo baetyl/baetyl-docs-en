@@ -127,7 +127,7 @@ node your_script.js
 
 If the above operations are normal, the resulting script directory structure is as shown in the following figure.
 
-![the directory of Lodash](../images/custom/node-third-lib-dir-Lodash.png)
+![the directory of Lodash](../images/develop/node-third-lib-dir-Lodash.png)
 
 Now we write the script `index.js` to use functions provided by `Lodash`. More detailed contents are as follows:
 
@@ -189,4 +189,4 @@ As above, after the `localhub` service receives the message sent to the topic `n
 }
 ```
 
-![using_lodash](../images/custom/write-node-script-third-lib-Lodash.png)
+![using_lodash](../images/develop/write-node-script-third-lib-Lodash.png)

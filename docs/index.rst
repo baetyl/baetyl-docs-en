@@ -11,10 +11,7 @@ Welcome to BAETYL's documentation!
       :align: right
       :target: https://baetyl.io
 
-Baetyl, extend cloud computing, data and service seamlessly to edge devices
-
-.. toctree::
-   BAETYL Home <https://baetyl.io>
+Baetyl, extend cloud computing, data and service seamlessly to edge devices.
 
 .. toctree::
    :maxdepth: 2
@@ -42,19 +39,19 @@ Baetyl, extend cloud computing, data and service seamlessly to edge devices
    guides/Config-interpretation.md
    guides/Device-connect-to-hub-module.md
    guides/Message-transfer-among-devices-with-hub-module.md
-   guides/Message-handling-with-local-function-module.md
+   guides/Message-handling-with-function-module.md
    guides/Message-synchronize-with-iothub-through-remote-module.md
 
 .. toctree::
    :maxdepth: 2
-   :caption: Custom Develop 
+   :caption: Develop 
 
-   custom/How-to-write-a-python-script-for-python-runtime.md
-   custom/How-to-write-a-node-script-for-node-runtime.md
-   custom/How-to-import-third-party-libraries-for-python-runtime.md
-   custom/How-to-import-third-party-libraries-for-node-runtime.md
-   custom/How-to-develop-a-customize-runtime-for-function.md
-   custom/How-to-develop-a-customize-module.md
+   develop/How-to-write-a-python-script-for-python-runtime.md
+   develop/How-to-write-a-node-script-for-node-runtime.md
+   develop/How-to-import-third-party-libraries-for-python-runtime.md
+   develop/How-to-import-third-party-libraries-for-node-runtime.md
+   develop/How-to-develop-a-customize-runtime-for-function.md
+   develop/How-to-develop-a-customize-module.md
 
 .. toctree::
    :maxdepth: 2
