@@ -4,7 +4,7 @@
 
 - The operating system as mentioned in this document is Ubuntu18.04.
 - The version of runtime is Python3.6, and for Python2.7, configurations are the same except for the language differences when coding the scripts.
-- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources-download.md#mqttbox-download).
+- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.md#mqttbox-download).
 - In this document, the third-party libraries we'll import are [`requests`](https://pypi.org/project/requests) and [`Pytorch`](https://pytorch.org/).
 - In this article, the service created based on the Hub module is called `localhub` service. And for the test case mentioned here, the `localhub` service, function calculation service, and other services are configured as follows:
 
@@ -140,7 +140,7 @@ python your_script.py
 
 If the above operations are normal, the resulting script directory structure is as shown in the following figure.
 
-![the directory of the Python script](../../images/customize/python-third-lib-dir-requests.png)
+![the directory of the Python script](../images/custom/python-third-lib-dir-requests.png)
 
 Now we write the Python script `get.py` to get the headers information of [https://baetyl.io](https://baetyl.io), assuming the trigger condition is that Python3.6 runtime receives the "A" command from the `localhub` service. More detailed contents are as follows:
 
@@ -181,7 +181,7 @@ functions:
 
 As above, after receiving the message publish to the topic `py`, the `localhub` service will call the `get.py` script to handle, and following it publish the result to the topic `py/hi`. So in the test case, we use MQTTBOX to subscribe the topic `py/hi` and publish the message `{"action": "A"}` to the `localhub` service by the topic `py`. If everything works correctly, MQTTBOX can receive the message of the topic `py/hi` which contains the headers information of [https://baetyl.io](https://baetyl.io) as shown below.
 
-![Get the header information of https://baetyl.io](../../images/customize/write-python-script-third-lib-requests.png)
+![Get the header information of https://baetyl.io](../images/custom/write-python-script-third-lib-requests.png)
 
 ## Import `Pytorch` third-party libraries
 
@@ -221,7 +221,7 @@ python your_script.py
 
 If the above operations are normal, the resulting script directory structure is as shown in the following figure.
 
-![the directory of the Python script](../../images/customize/python-third-lib-dir-Pytorch.png)
+![the directory of the Python script](../images/custom/python-third-lib-dir-Pytorch.png)
 
 Now we write the Python script `calc.py` to use functions provided by `Pytorch` for generating a random tensor, assuming the trigger condition is that Python3.6 runtime receives the "B" command from the `localhub` service. More detailed contents are as follows:
 
@@ -259,4 +259,4 @@ functions:
 
 As above, after receiving the message publish to the topic `py`, the `localhub` service will call the `calc.py` script to handle, and following it publish the result to the topic `py/hi`. So in the test case, we use MQTTBOX to subscribe the topic `py/hi` and publish the message `{"action": "B"}` to the `localhub` service by the topic `py`. If everything works correctly, MQTTBOX can receive the message of the topic `py/hi` in which we can get a random tensor as shown below.
 
-![generate a random tensor](../../images/customize/write-python-script-third-lib-Pytorch.png)
+![generate a random tensor](../images/custom/write-python-script-third-lib-Pytorch.png)

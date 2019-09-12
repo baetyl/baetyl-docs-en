@@ -10,7 +10,7 @@ Before compiling, users should configure the build environment. So this article 
 
 #### Install Go
 
-Go to [related resources](../Resources-download.md) to complete the download, then:
+Go to [related resources](../Resources.md) to complete the download, then:
 
 ```shell
 tar -C /usr/local -zxf go$VERSION.$OS-$ARCH.tar.gz  # Decompress the Go archive to the /usr/local directory
@@ -73,7 +73,7 @@ test -d "${GOPATH}" || mkdir "${GOPATH}"
 
 - Install by using binary file
 
-Go to [related resources](../Resources-download.md) to complete the download, then:
+Go to [related resources](../Resources.md) to complete the download, then:
 
 ```shell
 tar -C /usr/local -zxf go$VERSION.$OS-$ARCH.tar.gz  # Decompress the Go archive to the /usr/local directory
@@ -89,7 +89,7 @@ go version # View Go's version
 
 Go to [official page](https://hub.docker.com/editions/community/docker-ce-desktop-mac) to download the .dmg file you need. Once done, double-click to open and drag docker into the application folder.
 
-![Install On Darwin](../../images/setup/docker-install-on-mac.png)
+![Install On Darwin](../images/setup/docker-install-on-mac.png)
 
 View the version of installed docker:
 
@@ -199,7 +199,7 @@ sudo ./output/bin/baetyl start
 1. After the baetyl is started, you can check if the baetyl has run successfully by `ps -ef | grep "baetyl"` and determine the parameters used at startup. And you can check the log file for details. Log files are stored by default in the `var/log/baetyl` directory of the working directory.
 2. If run in docker container mode, the container runtime status can be viewed via the `docker stats` command.
 3. To use your own image, you need to modify the **image** of the modules and functions in the application configuration to specify your own image.
-4. For custom configuration, follow the instructions in [Configuration Interpretation](../tutorials/Config-interpretation.md) to make the relevant settings.
+4. For custom configuration, follow the instructions in [Configuration Interpretation](../guides/Config-interpretation.md) to make the relevant settings.
 
 ### Uninstall
 

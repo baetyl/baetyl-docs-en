@@ -4,7 +4,7 @@
 
 - The operating system as mentioned in this document is Ubuntu18.04.
 - The version of runtime is Python3.6, and for Python2.7, configuration is the same except for the language difference when coding the scripts
-- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources-download.md#mqttbox-download).
+- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.md#mqttbox-download).
 - In this article, the service created based on the Hub module is called `localhub` service. And for the test case mentioned here, the `localhub` service, function calculation service, and other services are configured as follows:
 
 ```yaml
@@ -127,7 +127,7 @@ function-sayhi-code/
 └── sayhi.py
 ```
 
-More detailed configuration of Python runtime, please refer to [Python runtime configuration](../tutorials/Config-interpretation.md).
+More detailed configuration of Python runtime, please refer to [Python runtime configuration](../guides/Config-interpretation.md).
 
 ## Parameter Convention
 
@@ -175,10 +175,10 @@ def handler(event, context):
 
 **Publish a dict format message**:
 
-![Publish a dict format message](../../images/customize/write-python-script-dict.png)
+![Publish a dict format message](../images/custom/write-python-script-dict.png)
 
 **Publish an non-dict format message**:
 
-![Publish an non-dict format message](../../images/customize/write-python-script-none-dict.png)
+![Publish an non-dict format message](../images/custom/write-python-script-none-dict.png)
 
 As above, for some general needs, we can implement it through the Python Standard Library. However, for some more complex demands, it is often necessary to import third-party libraries to complete. How to solve the problem? We've provided a general solution in [How to import third-party libraries for Python runtime](./How-to-import-third-party-libraries-for-python-runtime.md).

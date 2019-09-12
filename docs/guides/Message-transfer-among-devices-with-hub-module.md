@@ -4,7 +4,7 @@
 
 - The operating system as mentioned in this document is Ubuntu18.04.
 - It should be installed for Baetyl when you read this document, more details please refer to [How-to-quick-install-Baetyl](../setup/Quick-Install.md)
-- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources-download.md#mqttbox-download).
+- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.md#mqttbox-download).
 - In this article, the service created based on the Hub module is called `localhub` service.
 
 **NOTE**：Darwin can install Baetyl by using Baetyl source code. Please see [How to build image from source code](../setup/Build-from-Source.md).
@@ -123,7 +123,7 @@ For Baetyl, if the topic `+` is configured in the `permit` item list(whether `pu
 
 The message transferring and routing workflow among devices are as follows:
 
-![Message transfer test among devices](../../images/tutorials/trans/trans-flow.png)
+![Message transfer test among devices](../images/guides/trans/trans-flow.png)
 
 Specifically, as shown in the above figure, **client1**, **client2**, and **client3** respectively establish a connection to Baetyl with `localhub` Service, **client1** has the permission to publish messages to the topic `t`, and **client2** and **client3** respectively have the permission to subscribe topic `t` and `t/topic`.
 
@@ -131,8 +131,8 @@ Once the connection to Baetyl for the above three clients with `localhub` Servic
 
 In particular, **client1**, **client2**, and **client3** can be combined into one client, and the new client will have the permission to publish messages to the topic `t`, with permissions to subscribe messages to the topic `t` and `t/topic`. Here, using MQTTBOX as the new client, click the `Add subscriber` button to subscribe the topic `t` and `t/topic`. More detailed contents are as shown below.
 
-![The configuration of MQTTBOX about message transfer test among devices](../../images/tutorials/trans/mqttbox-tcp-trans-sub-config.png)
+![The configuration of MQTTBOX about message transfer test among devices](../images/guides/trans/mqttbox-tcp-trans-sub-config.png)
 
 As shown above, it can be found that after establishing a connection with Baetyl depend on the `localhub` Service by TCP connection method, the MQTTBOX successfully subscribes the topic `t` and `t/topic`, and then clicks the `Publish` button to publish message(`This message is From baetyl.`) to the topic `t`, you will find this message is received by MQTTBOX with the subscribed topics `t` and `t/topic`. More detailed contents are as below.
 
-![MQTTBOX received message successfully](../../images/tutorials/trans/mqttbox-tcp-trans-message-success.png)
+![MQTTBOX received message successfully](../images/guides/trans/mqttbox-tcp-trans-message-success.png)

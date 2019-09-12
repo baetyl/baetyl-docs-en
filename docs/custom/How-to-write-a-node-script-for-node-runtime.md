@@ -4,7 +4,7 @@
 
 - The operating system as mentioned in this document is Ubuntu18.04.
 - The version of runtime is Node8.5
-- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources-download.md#mqttbox-download).
+- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.md#mqttbox-download).
 - In this article, the service created based on the Hub module is called `localhub` service. And for the test case mentioned here, the `localhub` service, function calculation service, and other services are configured as follows:
 
 ```yaml
@@ -126,7 +126,7 @@ function-sayjs-code/
 └── index.js
 ```
 
-More detailed configuration of Node runtime, please refer to [Node runtime configuration](../tutorials/Config-interpretation.md).
+More detailed configuration of Node runtime, please refer to [Node runtime configuration](../guides/Config-interpretation.md).
 
 ## Parameter Convention
 
@@ -176,10 +176,10 @@ exports.handler = (event, context, callback) => {
 
 **Publish a dict format message**:
 
-![发送字典类数据](../../images/customize/write-node-script-dict.png)
+![发送字典类数据](../images/custom/write-node-script-dict.png)
 
 **Publish an non-dict format message**:
 
-![发送非字典类数据](../../images/customize/write-node-script-none-dict.png)
+![发送非字典类数据](../images/custom/write-node-script-none-dict.png)
 
 As above, for some general needs, we can implement it through the Node Standard Library. However, for some more complex demands, it is often necessary to import third-party libraries to complete. How to solve the problem? We've provided a general solution in [How to import third-party libraries for Node runtime](./How-to-import-third-party-libraries-for-node-runtime.md).

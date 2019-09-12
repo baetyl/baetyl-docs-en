@@ -63,5 +63,5 @@ html_theme = 'sphinx_rtd_theme'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-html_logo = 'images/logo/logo-with-name.png'
-html_favicon = 'images/logo/icon.svg'
+html_logo = 'images/logo/logo-with-name-ww.png'
+html_favicon = 'images/logo/favicon.ico'

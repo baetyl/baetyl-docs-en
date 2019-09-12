@@ -1,17 +1,16 @@
-# 如何针对 Node 运行时引入第三方包
+# How to import third-party libraries for Node runtime
 
-**声明**：
+**Statement**：
 
-- 本文测试所用设备系统为 Ubuntu18.04
-- 运行模式为 **docker** 容器模式，**native** 进程模式配置流程相同
-- Node 版本为 8.5
-- 模拟 MQTT client 行为的客户端为 [MQTTBOX](../Resources-download.md#下载-MQTTBOX-客户端)
-- 本文选择引入 [`Lodash`](https://www.lodashjs.com/) 这个第三方包来进行演示说明
-- 本文中基于 Hub 模块创建的服务名称为 `localhub` 服务。并且针对本文的测试案例中，对应的 `localhub` 服务、函数计算服务以及其他服务的配置统一如下：
+- The operating system as mentioned in this document is Ubuntu18.04.
+- The version of runtime is Node8.5
+- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.md#mqttbox-download).
+- In this document, we give an example about how import the third-party library [`Lodash`](https://www.lodashjs.com/).
+- In this article, the service created based on the Hub module is called `localhub` service. And for the test case mentioned here, the `localhub` service, function calculation service, and other services are configured as follows:
 
 ```yaml
-# localhub 配置
-# 配置文件位置: var/db/baetyl/localhub-conf/service.yml
+# The configuration of Local Hub service
+# Configuration file location is: var/db/baetyl/localhub-conf/service.yml
 listen:
   - tcp://0.0.0.0:1883
 principals:
@@ -23,8 +22,8 @@ principals:
       - action: 'sub'
         permit: ['#']
 
-# 本地 baetyl-function-manager 配置
-# 配置文件位置: var/db/baetyl/function-manager-conf/service.yml
+# The configuration of Local Function Manager service
+# Configuration file location is: var/db/baetyl/function-manager-conf/service.yml
 hub:
   address: tcp://localhub:1883
   username: test
@@ -45,8 +44,8 @@ functions:
       max: 10
       idletime: 1m
 
-# application.yml配置
-# 配置文件位置: var/db/baetyl/application.yml
+# The configuration of application.yml
+# Configuration file location is: var/db/baetyl/application.yml
 version: v0
 services:
   - name: localhub
@@ -101,36 +100,36 @@ volumes:
     path: var/db/baetyl/function-sayjs-code
 ```
 
-系统自带的 Node 环境有可能不会满足我们的需要，实际使用往往需要引入第三方库，下面给出示例。
+Generally, using the Node Standard Library may not meet our needs. In fact, it is often necessary to import some third-party libraries. We'll give one example below.
 
-## 引用 `Lodash` 第三方包
+## Import `Lodash` third-party libraries
 
-`Lodash` 是一个一致性、模块化、高性能的 JavaScript 实用工具库。我们可以引入第三方库 [`Lodash`](https://www.lodashjs.com/) 来使用它的功能。如何引入，具体如下所示：
+`Lodash` is a modern JavaScript utility library delivering modularity, performance & extras. Baetyl support import third-party libraries such as [`Lodash`](https://www.lodashjs.com/) to use its functions. How to import it, as shown below:
 
-- 步骤 1: 进入 js 脚本目录，然后下载 `Lodash`
+- Step 1: change path to the directory of javascripts, then install `Lodash` package
 
 ```shell
 cd /directory/of/Node/script
 npm install --save lodash
 ```
 
-- 步骤 2: 在具体执行脚本中引入第三方库 `Lodash`，如下所示：
+- Step 2: import `Lodash` in a javascript:
 
 ```shell
 const _ = require('lodash');
 ```
 
-- 步骤 3: 执行脚本
+- Step 3: execute your javascript:
 
 ```shell
 node your_script.js
 ```
 
-如上述操作正常，则形成的脚本目录结构如下图所示。
+If the above operations are normal, the resulting script directory structure is as shown in the following figure.
 
-![Node Lodash 第三方库脚本目录](../../images/customize/node-third-lib-dir-Lodash.png)
+![the directory of Lodash](../images/custom/node-third-lib-dir-Lodash.png)
 
-下面，我们编写脚本 `index.js` 来使用 `Lodash` 提供的功能，具体如下：
+Now we write the script `index.js` to use functions provided by `Lodash`. More detailed contents are as follows:
 
 ```javascript
 #!/usr/bin/env node
@@ -140,28 +139,28 @@ const _ = require('lodash');
 exports.handler = (event, context, callback) => {
   result = {}
   
-  //筛选数组中重复元素
+  //remove repeating elements in array
   result["unique_array"] = _.uniq(event['array']);
-  //排序
+  //sort
   result['sorted_users'] = _.sortBy(event['users'], function(o) { return o.age; });
-  //过滤
+  //filter
   result['filtered_users'] = _.filter(event['users'], function(o) { return !o.active; });
 
   callback(null, result);
 }
 ```
 
-函数运行时服务的配置如下:
+The configuration of Node function runtime is as below:
 
 ```yaml
-# node function 配置
+# The configuration of Node function runtime
 functions:
   - name: 'sayhi'
     handler: 'index.handler'
     codedir: 'var/db/baetyl/function-sayhi'
 ```
 
-首先定义如下的 json 数据作为输入消息:
+First define the following json data as an input message:
 
 ```javascript
 {
@@ -174,7 +173,7 @@ functions:
 }
 ```
 
-如上，`localhub` 服务接收到发送到主题 `node` 的消息后，会调用 `index.js` 脚本执行具体逻辑，对消息中的数组执行重复元素筛选、元素排序、元素按条件过滤等操作。然后将执行结果以 MQTT 消息形式反馈给主题 `t/hi`。我们通过 MQTTBOX 订阅主题 `t/hi`，可以观察到如下消息:
+As above, after the `localhub` service receives the message sent to the topic `node`, it calls `index.js` script to execute the concrete logic to remove repeated elements, filter, sort of array in input data. The result is then fed back to the topic `t/hi` as an MQTT message. We subscribe to the topic `t/hi` via MQTTBOX and we can observe the following message:
 
 ```javascript
 {
@@ -190,4 +189,4 @@ functions:
 }
 ```
 
-![lodash数据处理](../../images/customize/write-node-script-third-lib-Lodash.png)
+![using_lodash](../images/custom/write-node-script-third-lib-Lodash.png)

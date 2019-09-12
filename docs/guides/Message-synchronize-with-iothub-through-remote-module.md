@@ -4,7 +4,7 @@
 
 - The operating system as mentioned in this document is Ubuntu18.04.
 - It should be installed for Baetyl when you read this document, more details please refer to [How-to-quick-install-Baetyl](../setup/Quick-Install.md)
-- The MQTT client toolkit as mentioned in this document are [MQTTBOX](../Resources-download.md) and [MQTT.fx](../Resources-download.md).
+- The MQTT client toolkit as mentioned in this document are [MQTTBOX](../Resources.md) and [MQTT.fx](../Resources.md).
 - The hub and remote module images used have published by [BIE Cloud Management Suite](https://cloud.baidu.com/product/bie.html): `hub.baidubce.com/baetyl/baetyl-hub:latest`、`hub.baidubce.com/baetyl/baetyl-remote-mqtt:latest`
 - Docker images compiled from the Baetyl source code also can be used. More detailed contents please refer to [Build Baetyl from source](../setup/Build-from-Source.md)
 - The Remote Hub as mentioned in this document is [Baidu IoT Hub](https://cloud.baidu.com/product/iot.html)
@@ -30,7 +30,7 @@ The Remote Module was developed to meet the needs of the IoT scenario. The Baety
 
 The workflow diagram are as follows.
 
-![using Remote Module to synchronize message](../../images/tutorials/remote/remote-flow.png)
+![using Remote Module to synchronize message](../images/guides/remote/remote-flow.png)
 
 ## Message Synchronize via Remote Module
 
@@ -133,35 +133,35 @@ Similarly, from MQTT.fx publishes a message to the topic `t2`, to MQTTBOX receiv
 
 As described in `Step 1, Step 2`, the detailed contents of the connection between MQTT.fx and Baidu IoT Hub are as follows.
 
-![Create endpoint via Baidu IoT Hub](../../images/tutorials/remote/cloud-iothub-config.png)
+![Create endpoint via Baidu IoT Hub](../images/guides/remote/cloud-iothub-config.png)
 
-![Create other information via Baidu IoT Hub](../../images/tutorials/remote/cloud-iothub-user-config.png)
+![Create other information via Baidu IoT Hub](../images/guides/remote/cloud-iothub-user-config.png)
 
-![Configuration of MQTT.fx](../../images/tutorials/remote/mqttfx-connect-hub-config1.png)
+![Configuration of MQTT.fx](../images/guides/remote/mqttfx-connect-hub-config1.png)
 
-![Configuration of MQTT.fx](../../images/tutorials/remote/mqttfx-connect-hub-config2.png)
+![Configuration of MQTT.fx](../images/guides/remote/mqttfx-connect-hub-config2.png)
 
 After set the configuration of MQTT.fx, click `OK` or `Apply` button, then click `Connect` button, and wait for the connecting. Also, we can check if the connection status is OK via the color button. When the button's color change to **Green**, that is to say, the connection is established. More detailed contents are shown below.
 
-![Successfully establish a connection between MQTT.fx and Baidu IoT Hub](../../images/tutorials/remote/mqttfx-connect-success.png)
+![Successfully establish a connection between MQTT.fx and Baidu IoT Hub](../images/guides/remote/mqttfx-connect-success.png)
 
 After the connection is established, switch to the `Subscribe` page and subscribe the topic `t1`. More detailed contents are shown below.
 
-![MQTT.fx successfully subscribe the topic t1](../../images/tutorials/remote/mqttfx-sub-t1-success.png)
+![MQTT.fx successfully subscribe the topic t1](../images/guides/remote/mqttfx-sub-t1-success.png)
 
 ### Establish a Connection between MQTTBOX and the Local Hub Module
 
 As described in `Step 3`, the Local Hub Module and Remote Module also loaded when Baetyl started. More detailed contents are shown below.
 
-![Baetyl successfully load Hub、Remote](../../images/tutorials/remote/remote-start.png)
+![Baetyl successfully load Hub、Remote](../images/guides/remote/remote-start.png)
 
 In addition, we can execute the command `docker stats` to view the list of docker containers currently running on the system.
 
-![View the list of docker containers currently running](../../images/tutorials/remote/docker-ps-after-remote-start.png)
+![View the list of docker containers currently running](../images/guides/remote/docker-ps-after-remote-start.png)
 
 After Baetyl successfully startup, set the configuration of connection, then establish the connection with the Local Hub Module and subscribe the topic `t2`.
 
-![MQTTBOX successfully subscribe the topic t2](../../images/tutorials/remote/mqttbox-sub-t2-success.png)
+![MQTTBOX successfully subscribe the topic t2](../images/guides/remote/mqttbox-sub-t2-success.png)
 
 ### Message Synchronize Test
 
@@ -171,20 +171,20 @@ Here, MQTT.fx and MQTTBOX will be used as message publishers, and the other one 
 
 Firstly, using MQTT.fx publishes a message `This message is from MQTT.fx.` to the topic `t2`.
 
-![Publishing a message to the topic t2 via MQTT.fx](../../images/tutorials/remote/mqttfx-pub-t2-success.png)
+![Publishing a message to the topic t2 via MQTT.fx](../images/guides/remote/mqttfx-pub-t2-success.png)
 
 At the same time, observing the message receiving status of MQTTBOX via the topic `t2`.
 
-![MQTTBOX successfully received the message](../../images/tutorials/remote/mqttbox-receive-t2-message-success.png)
+![MQTTBOX successfully received the message](../images/guides/remote/mqttbox-receive-t2-message-success.png)
 
 **MQTTBOX publishes message, and MQTT.fx receives message**
 
 Similarly, publishing the message `This message is from MQTTBOX.` to the topic `t1` via MQTTBOX.
 
-![Publishing a message to the topic t1 via MQTTBOX](../../images/tutorials/remote/mqttbox-pub-t1-success.png)
+![Publishing a message to the topic t1 via MQTTBOX](../images/guides/remote/mqttbox-pub-t1-success.png)
 
 Then we can observe the message receiving status of MQTT.fx via the topic `t1`.
 
-![MQTT.fx successfully received the message](../../images/tutorials/remote/mqttfx-receive-t1-message-success.png)
+![MQTT.fx successfully received the message](../images/guides/remote/mqttfx-receive-t1-message-success.png)
 
 In summary, both MQTT.fx and MQTTBOX have correctly received the specified message, and the content is consistent.

@@ -20,50 +20,50 @@ Baetyl, extend cloud computing, data and service seamlessly to edge devices
    :maxdepth: 2
    :caption: Overview
    
-   us-en/overview/Whatis.md
-   us-en/overview/Advantages.md
-   us-en/overview/Design.md
-   us-en/overview/Framework.md
-   us-en/overview/Extension.md
-   us-en/overview/Security.md
-   us-en/overview/Control.md
+   overview/Whatis.md
+   overview/Advantages.md
+   overview/Design.md
+   overview/Framework.md
+   overview/Extension.md
+   overview/Security.md
+   overview/Control.md
 
 .. toctree::
    :maxdepth: 2
    :caption: Setup
 
-   us-en/setup/Quick-Install.md
-   us-en/setup/Build-from-Source.md
+   setup/Quick-Install.md
+   setup/Build-from-Source.md
 
 .. toctree::
    :maxdepth: 2
    :caption: Guides
 
-   us-en/guides/Config-interpretation.md
-   us-en/guides/Device-connect-to-hub-module.md
-   us-en/guides/Message-transfer-among-devices-with-hub-module.md
-   us-en/guides/Message-handling-with-local-function-module.md
-   us-en/guides/Message-synchronize-with-iothub-through-remote-module.md
+   guides/Config-interpretation.md
+   guides/Device-connect-to-hub-module.md
+   guides/Message-transfer-among-devices-with-hub-module.md
+   guides/Message-handling-with-local-function-module.md
+   guides/Message-synchronize-with-iothub-through-remote-module.md
 
 .. toctree::
    :maxdepth: 2
    :caption: Custom Develop 
 
-   us-en/custom/How-to-write-a-python-script-for-python-runtime.md
-   us-en/custom/How-to-write-a-node-script-for-node-runtime.md
-   us-en/custom/How-to-import-third-party-libraries-for-python-runtime.md
-   us-en/custom/How-to-import-third-party-libraries-for-node-runtime.md
-   us-en/custom/How-to-develop-a-customize-runtime-for-function.md
-   us-en/custom/How-to-develop-a-customize-module.md
+   custom/How-to-write-a-python-script-for-python-runtime.md
+   custom/How-to-write-a-node-script-for-node-runtime.md
+   custom/How-to-import-third-party-libraries-for-python-runtime.md
+   custom/How-to-import-third-party-libraries-for-node-runtime.md
+   custom/How-to-develop-a-customize-runtime-for-function.md
+   custom/How-to-develop-a-customize-module.md
 
 .. toctree::
    :maxdepth: 2
    :caption: FAQ 
 
-   us-en/FAQ.md
+   FAQ.md
 
 .. toctree::
    :maxdepth: 2
    :caption: Resources 
 
-   us-en/Resources.md
+   Resources.md

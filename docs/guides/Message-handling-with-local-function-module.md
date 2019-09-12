@@ -5,7 +5,7 @@
 - The operating system as mentioned in this document is Ubuntu18.04.
 - It should be installed for Baetyl when you read this document, more details please refer to [How-to-quick-install-Baetyl](../setup/Quick-Install.md)
 - The version of runtime is Python3.6, and for Python2.7, configuration is the same except fot the language difference when coding the scripts
-- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources-download.md#mqttbox-download).
+- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.md#mqttbox-download).
 - The docker image used in this document is compiled from the Baetyl source code. More detailed contents please refer to [Build Baetyl from source](../setup/Build-from-Source.md).
 - In this article, the service created based on the Hub module is called `localhub` service.
 
@@ -25,7 +25,7 @@ This document will take the TCP connection method as an example to show the mess
   - If connect unsuccessfully, then retry `Step 2` operation until it connect successfully
 - Step 3：Check the publishing and receiving messages via MQTTBOX.
 
-![Workflow of using Local Function Manager Service to handle MQTT messages](../../images/tutorials/process/python-flow.png)
+![Workflow of using Local Function Manager Service to handle MQTT messages](../images/guides/process/python-flow.png)
 
 ## Message Handling Test
 
@@ -203,15 +203,15 @@ _**NOTE**: Any function that appears in the `rules` configuration must be config
 
 According to Step 1, execute `sudo systemctl start baetyl` to start Baetyl in Docker mode and then execute the command `sudo systemctl status baetyl` to check whether baetyl is running. The normal situation is shown as below.
 
-![Baetyl status](../../images/setup/systemctl-status.png)
+![Baetyl status](../images/setup/systemctl-status.png)
 
 **NOTE**：Darwin can install Baetyl by using Baetyl source code, and excute `sudo baetyl start` to start the Baetyl in Docker container mode.
 
-![Baetyl start](../../images/tutorials/process/function-start.png)
+![Baetyl start](../images/guides/process/function-start.png)
 
 Also, we can execute the command `docker ps` to view the list of docker containers currently running.
 
-![View the list of docker containers currently running](../../images/tutorials/process/docker-ps-after.png)
+![View the list of docker containers currently running](../images/guides/process/docker-ps-after.png)
 
 After comparison, it is not difficult to find that the two container modules of the `localhub` Service and the Local Function Manager Service have been successfully loaded at the time of Baetyl startup.
 
@@ -219,7 +219,7 @@ After comparison, it is not difficult to find that the two container modules of 
 
 Here, using MQTTBOX as the MQTT client, click the `Add subscriber` button to subscribe the topic `t/hi`. And topic `t/hi` is used to receive the result message after `sayhi` function handled. More detailed contents are as shown below.
 
-![MQTTBOX connection configuration](../../images/tutorials/process/mqttbox-tcp-process-config.png)
+![MQTTBOX connection configuration](../images/guides/process/mqttbox-tcp-process-config.png)
 
 The figure above shows that MQTTBOX has successfully subscribed the topic `t/hi`.
 
@@ -267,14 +267,14 @@ It can be found that after receiving a message in a dictionary(`dict`) format, t
 
 Here, we publish the message `{"id":10}` to the topic `t` via MQTTBOX, and then observe the receiving message of the topic `t/hi`. More detailed contents are as shown below.
 
-![MQTTBOX successfully receive the result via topic `t/hi`](../../images/tutorials/process/mqttbox-tcp-process-success.png)
+![MQTTBOX successfully receive the result via topic `t/hi`](../images/guides/process/mqttbox-tcp-process-success.png)
 
 It is not difficult to find that the result received by MQTTBOX via the topic `t/hi` is consistent with the above analysis.
 
 In addition, we can observe the Baetyl's log and execute the command `docker ps` again to view the list of containers currently running on the system. The results are shown below.
 
-![Baetyl's log when using python runtime](../../images/tutorials/process/python-start.png)
+![Baetyl's log when using python runtime](../images/guides/process/python-start.png)
 
-![View the list of docker containers currently running](../../images/tutorials/process/docker-ps-after-python-start.png)
+![View the list of docker containers currently running](../images/guides/process/docker-ps-after-python-start.png)
 
 As you can see from the above two figures, except the `localhub` Service and the Local Function Manager Service were loaded when Baetyl started, the Python Runtime Service was also loaded when the MQTT message of topic `t` was handled by function `sayhi`. More detailed designed contents of Python Runtime Service please refer to [Baetyl design](../overview/Design.md).
