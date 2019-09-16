@@ -9,12 +9,12 @@ Welcome to BAETYL's documentation!
 .. figure:: images/logo/logo-with-name.png
       :width: 150px
       :align: right
-      :target: https://baetyl.io
+      :target: https://baetyl.io/en/
 
 Baetyl, extend cloud computing, data and service seamlessly to edge devices.
 
 .. toctree::
-   BAETYL Home <https://baetyl.io>
+   BAETYL Home <https://baetyl.io/en/>
 
 .. toctree::
    :maxdepth: 2
