@@ -26,7 +26,7 @@ Baetyl, extend cloud computing, data and service seamlessly to edge devices.
 
 .. toctree::
    :maxdepth: 2
-   :caption:  v
+   :caption: Installation
 
    install/Quick-Install.md
    install/Build-from-Source.md
