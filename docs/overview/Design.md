@@ -1,26 +1,5 @@
 # Baetyl Design
 
-- [Concepts](#concepts)
-- [Components](#components)
-- [Master](#master)
-  - [Engine](#engine)
-  - [Docker Engine](#docker-engine)
-    - [Native Engine](#native-engine)
-  - [RESTful API](#restful-api)
-    - [System Inspect](#system-inspect)
-    - [System Update](#system-update)
-    - [Instance Start&Stop](#instance-startstop)
-    - [Instance Report](#instance-report)
-  - [Environment Variable](#environment-variable)
-- [Official Modules](#official-modules)
-  - [baetyl-agent](#baetyl-agent)
-  - [baetyl-hub](#baetyl-hub)
-  - [baetyl-function-manager](#baetyl-function-manager)
-  - [baetyl-function-python27](#baetyl-function-python27)
-  - [baetyl-function-python36](#baetyl-function-python36)
-  - [baetyl-function-node85](#baetyl-function-node85)
-  - [baetyl-remote-mqtt](#baetyl-remote-mqtt)
-
 ## Concepts
 
 - **System**: Refers to the Baetyl system, including **Master**, **Service**, **Volume** and system resources used.
@@ -56,11 +35,8 @@ Structure Diagram:
 
 The start and stop process of the Master is as follows:
 
-1. Execute the startup command: `sudo systemctl start baetyl` to start Baetyl in Docker mode and then execute the command `sudo systemctl status baetyl` to check whether baetyl is running.
-
-**NOTE**：Darwin can excute `sudo baetyl start` to start the Baetyl in Docker container mode.
-
-2. The Master will first load etc/baetyl/baetyl.yml in the working directory, initialize the running mode, API server, log and exit timeout, etc. These configurations can not be changed during application OTA. If no error is reported, the baetyl.sock (only on Linux) file is generated in the var/run/ directory.
+1. Execute the startup command: `sudo systemctl start baetyl` to start Baetyl in Docker mode and then execute the command `sudo systemctl status baetyl` to check whether baetyl is running. In darwin, excute `sudo baetyl start` to run the Baetyl in the foreground of the terminal.
+2. The Master will first load etc/baetyl/conf.yml in the working directory, initialize the running mode, API server, log and exit timeout, etc. These configurations can not be changed during application OTA. If no error is reported, the baetyl.sock (only on Linux) file is generated in the var/run/ directory.
 3. The Master will then attempt to load the application configuration var/db/baetyl/application.yml and will not start any service if the configuration does not exist, otherwise the list of services and storage volumes in the application configuration will be loaded. This file will be updated during application OTA, and the system will update the services according to the new configuration.
 4. Before starting all services, the Master will first call the Engine interface to perform some preparatory work. For example, in container mode, it will try to download the image of all services first.
 5. After the preparation is completed, start all services in sequence, and if the service fails to start, the Master will exit. In the container mode, the storage volumes are mapped to the inside of the container; in the process mode, a temporary working directory is created for each service, and the storage volumes are soft linked to the working directory. If the service is stopped, the temporary working directory will be cleaned up, and the behavior is the same with container mode.
@@ -147,8 +123,8 @@ For the service instance, after the instance is started, you can get the API Ser
 
 The Header key is as follows：
 
-- x-baetyl-username：service name as username
-- x-baetyl-password：dynamic token as password
+- x-openedge-username：service name as username
+- x-openedge-password：dynamic token as password
 
 The following are the currently available interfaces:
 
@@ -214,13 +190,11 @@ type Hardware struct {
 
 #### System Update
 
-This interface is used to update the application in the system. We call it the application OTA, and the Master OTA (that is, the self-upgrade of the Baetyl Master) will be implemented later. Application OTA will stop all old services and then start all new services, so there will be a downtime. We will continue to optimize to avoid restarting the services which configuration is not changed.
+This interface is used to update the application or the master binary in the system, which called the application OTA or the master OTA. The configuration of the volumes, networks, and services will be compared during application OTA. If the service and its related configuration are not changed, the service will not be restarted, otherwise it will be restarted.
 
- The process of application OTA is as follows:
+The process of application OTA is as follows:
 
 ![update](../images/overview/design/design_app_ota.png)
-
-_**NOTE**: At present, the application OTA adopts the full update method, that is, all the old services are stopped and all new services are started, so the service will be interrupted._
 
 #### Instance Start&Stop
 
@@ -326,8 +300,10 @@ The subsequent JSON that `baetyl-agent` reports to the cloud is as follows, the 
 
 Baetyl currently sets the following system environment variables for the service instance:
 
-- OPENEDGE_HOST_OS: Operating system of the device (host) where Baetyl is located
+- OPENEDGE_HOST_OS: Operate system of the device (host) where Baetyl is located
+- OPENEDGE_HOST_ID：Host ID of the device (host) where Baetyl is located, can be used as device fingerprint
 - OPENEDGE_MASTER_API: API Server address of the Baetyl Master
+- OPENEDGE_MASTER_API_VERSION：API version of the Baetyl Master
 - OPENEDGE_RUNNING_MODE: Service running mode adopted by the Baetyl Master
 - OPENEDGE_SERVICE_NAME: The name of the service
 - OPENEDGE_SERVICE_TOKEN: Dynamically assigned Token

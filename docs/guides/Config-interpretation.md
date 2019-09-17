@@ -1,16 +1,5 @@
 # Baetyl Configuration Interpretation
 
-- [Statement](#statement)
-- [Master Configuration](#master-configuration)
-- [Application Configuration](#application-configuration)
-- [baetyl-agent Configuration](#baetyl-agent-configuration)
-- [baetyl-hub Configuration](#baetyl-hub-configuration)
-- [baetyl-function-manager Configuration](#baetyl-function-manager-configuration)
-- [baetyl-function-python27、baetyl-function-python36 Configuration](#baetyl-function-python27-configuration-baetyl-function-python36-configuration)
-- [baetyl-remote-mqtt Configuration](#baetyl-remote-mqtt-configuration)
-
-## Statement
-
 Supported units:
 
 - Size unit: b(byte), k(kilobyte), m(megabyte), g(gigabyte)
@@ -20,7 +9,7 @@ Configuration examples can be found in the `example` directory of this project.
 
 ## Master Configuration
 
-The Master configuration and application configuration are separated. The default configuration file is `etc/baetyl/baetyl.yml` in the working directory. The configuration is interpreted as follows:
+The Master configuration and application configuration are separated. The default configuration file is `etc/baetyl/conf.yml` in the working directory. The configuration is interpreted as follows:
 
 ```yaml
 mode: The default value is `docker`, running mode of services. **docker** container mode or **native** process mode
@@ -240,7 +229,7 @@ functions:
     timeout: The default value is `30s`, Client connection function instance timeout
 ```
 
-## baetyl-function-python27、baetyl-function-python36 Configuration
+## baetyl-function-python Configuration
 
 ```yaml
 # the configurations of the two modules are the same, so we can follow this sample below

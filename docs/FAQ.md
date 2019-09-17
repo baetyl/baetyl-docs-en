@@ -6,7 +6,7 @@ This document mainly provides related issues and solutions for Baetyl deployment
 
 ![Picture](images/faq/docker-engine-conf-miss.png)
 
-**Suggested Solution**: As shown in the above picture, Baetyl startup lacks configuration dependency files, refer to [GitHub-Baetyl](https://github.com/baetyl/baetyl) `example` folder(the location is `etc/baetyl/baetyl.yml`).
+**Suggested Solution**: As shown in the above picture, Baetyl startup lacks configuration dependency files, refer to [GitHub-Baetyl](https://github.com/baetyl/baetyl) `example` folder(the location is `etc/baetyl/conf.yml`).
 
 ## Q2: Execute the command `docker info` get the following result on Ubuntu/Debian:
 
@@ -137,7 +137,7 @@ You must meet the following 2 conditions:
 - To make sure messages will be persist in local disk which are sent to local hub, the topic's QoS must be set to 1.
 - To make sure messages will be sent to cloud successful, the QoS of `rules` configuration of Remote module must be set to 1, which includes remote sub's QoS and the pub's QoS. By referring to [Configuration Analysis Document](./guides/Config-interpretation.md)
 
-## Q18: After the configuration is sent from the cloud to the edge, the default startup mode is `docker` container mode. After modifying `mode: native` in `etc/baetyl/baetyl.yml` the startup error is similar to the following: `failed to update system: open /Users/ Xxx/baetyl_native/var/run/baetyl/services/agent/lib/baetyl/hub.baidubce.com/baetyl/baetyl-agent:0.1.2/package.yml: no such file or directory`.
+## Q18: After the configuration is sent from the cloud to the edge, the default startup mode is `docker` container mode. After modifying `mode: native` in `etc/baetyl/conf.yml` the startup error is similar to the following: `failed to update system: open /Users/ Xxx/baetyl_native/var/run/baetyl/services/agent/lib/baetyl/hub.baidubce.com/baetyl/baetyl-agent:0.1.2/package.yml: no such file or directory`.
 
 **Suggested Solution**: At present, our cloud management does not support the process mode. If you need to start `Baetyl` in process mode locally, please refer to the configuration content in `example/native` and execute the command `make install-native`. Install and start by process with the command `sudo baetyl start`.
 

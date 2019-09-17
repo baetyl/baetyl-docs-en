@@ -7,68 +7,63 @@ About architecture design, Baetyl takes **modularization** and **containerizatio
 ## Advantages
 
 - **Shielding Computing Framework**: Baetyl provides two official computing modules(**Local Function Module** and **Python Runtime Module**), also supports customize module(which can be written in any programming language or any machine learning framework).
-- **Simplified Application Production**: Baetyl combines with **Cloud Management Suite** of BIE and many other productions of Baidu Cloud(such as [CFC](https://cloud.baidu.com/product/cfc.html), [Infinite](https://cloud.baidu.com/product/infinite.html), [Jarvis](http://di.baidu.com/product/jarvis), [IoT EasyInsight](https://cloud.baidu.com/product/ist.html), [TSDB](https://cloud.baidu.com/product/tsdb.html), [IoT Visualization](https://cloud.baidu.com/product/iotviz.html)) to provide data calculation, storage, visible display, model training and many more abilities.
-- **Quickly Deployment**: Baetyl pursues docker container mode, it make developers quickly deploy Baetyl on different operating system.
-- **Deploy On Demand**: Baetyl takes modularization mode and splits functions to multiple independent modules. Developers can select some modules which they need to deploy.
-- **Rich Configuration**: Baetyl supports X86 and ARM CPU processors, as well as Linux and Darwin operating systems.
+- **Simplify Application Production**: Baetyl combines with **Cloud Management Suite** of BIE and many other productions of Baidu Cloud(such as [CFC](https://cloud.baidu.com/product/cfc.html), [Infinite](https://cloud.baidu.com/product/infinite.html), [EasyEdge](https://ai.baidu.com/easyedge/home), [TSDB](https://cloud.baidu.com/product/tsdb.html), [IoT Visualization](https://cloud.baidu.com/product/iotviz.html)) to provide data calculation, storage, visible display, model training and many more abilities.
+- **Service Deployment on Demand**: Baetyl adopts containerization and modularization design, and each module runs independently and isolated. Developers can choose modules to deploy based on their own needs.
+- **Support multiple platforms**: Baetyl supports multiple hardware and software platforms, such as X86 and ARM CPU, Linux and Darwin operating systems.
+
+## Components
+
+As an edge computing platform, **Baetyl** not only provides features such as underlying service management, but also provides some basic functional modules, as follows:
+
+- Baetyl [Master](Design.md#master) is responsible for the management of service instances, such as start, stop, supervise, etc., consisting of Engine, API, Command Line. And supports two modes of running service: **native** process mode and **docker** container mode
+- The official module [baetyl-agent](Design.md#baetyl-agent) is responsible for communication with the BIE cloud management suite, which can be used for application delivery, device information reporting, etc. Mandatory certificate authentication to ensure transmission security;
+- The official module [baetyl-hub](Design.md#baetyl-hub) provides message subscription and publishing functions based on the [MQTT protocol](http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html), and supports four access methods: TCP, SSL, WS, and WSS;
+- The official module [baetyl-remote-mqtt](Design.md#baetyl-remote-mqtt) is used to bridge two MQTT Servers for message synchronization and supports configuration of multiple message route rules. ;
+- The official module [baetyl-function-manager](Design.md#baetyl-function-manager) provides computing power based on MQTT message mechanism, flexible, high availability, good scalability, and fast response;
+- The official module [baetyl-function-python27](Design.md#baetyl-function-python27) provides the Python2.7 function runtime, which can be dynamically started by `baetyl-function-manager`;
+- The official module [baetyl-function-python36](Design.md#baetyl-function-python36) provides the Python3.6 function runtime, which can be dynamically started by `baetyl-function-manager`;
+- The official module [baetyl-function-node85](Design.md#baetyl-function-node85) provides the Node 8.5 function runtime, which can be dynamically started by `baetyl-function-manager`;
+- SDK (Golang) can be used to develop custom modules.
+
+### Architecture
+
+![Architecture](../images/overview/design/design_overview.png)
+
+## Installation
+
+- [Quick Install Baetyl](../setup/Quick-Install.md)
+- [Build Baetyl From Source](../setup/Build-from-Source.md)
+
+## Development
+
+- [Baetyl design](Design.md)
+- [Baetyl config interpretation](../guides/Config-interpretation.md)
+- [How to write Python script for Python runtime](../develop/How-to-write-a-python-script-for-python-runtime.md)
+- [How to write Node script for Node runtime](../develop/How-to-write-a-node-script-for-node-runtime.md)
+- [How to import third-party libraries for Python runtime](../develop/How-to-import-third-party-libraries-for-python-runtime.md)
+- [How to import third-party libraries for Node runtime](../develop/How-to-import-third-party-libraries-for-node-runtime.md)
+- [How to develop a customize runtime for function](../develop/How-to-develop-a-customize-runtime-for-function.md)
+- [How to develop a customize module for Baetyl](../develop/How-to-develop-a-customize-module.md)
 
 ## Contributing
 
-Welcome to Baetyl of Baidu Open Source Project. To contribute to Baetyl, please follow the process below.
+If you are passionate about contributing to open source community, Baetyl will provide you with both code contributions and document contributions. More details, please see: [How to contribute code or document to Baetyl](./Contributing.md).
 
-We sincerely appreciate your contribution. This document explains our workflow and work style.
+## Discussion
 
-### Workflow
+As the first open edge computing framework in China, Baetyl aims to create a lightweight, secure, reliable and scalable edge computing community that will create a good ecological environment. Here, we offer the following options for you to choose from:
 
-Baetyl use this [Git branching model](https://nvie.com/posts/a-successful-git-branching-model/). The following steps guide usual contributions.
-
-1. Fork
-
-   Our development community has been growing fast, so we encourage developers to submit code. And please file Pull Requests from your fork. To make a fork, please refer to Github page and click on the ["Fork" button](https://help.github.com/articles/fork-a-repo/).
-
-2. Prepare for the development environment
-
-   ```bash
-   go get github.com/baetyl/baetyl # clone baetyl official repository
-   cd $GOPATH/src/github.com/baetyl/baetyl # step into baetyl
-   git checkout master  # verify master branch
-   git remote add fork https://github.com/<your_github_account>/baetyl  # specify remote repository
-   ```
-
-3. Push changes to your forked repository
-
-   ```bash
-   git status   # view current code change status
-   git add .    # add all local changes
-   git commit -c "modify description"  # commit changes with comment
-   git push fork # push code changes to remote repository which specifies your forked repository
-   ```
-
-4. Create pull request
-
-   You can push and file a pull request to Baetyl official repository [https://github.com/baetyl/baetyl](https://github.com/baetyl/baetyl). To create a pull request, please follow [these steps](https://help.github.com/articles/creating-a-pull-request/). Once the Baetyl repository reviewer approves and merges your pull request, you will see the code which contributed by you in the Baetyl official repository.
-
-### Code Review
-
-- About Golang format, please refer to [Go Code Review Comments](https://github.com/golang/go/wiki/CodeReviewComments).
-- Please feel free to ping your reviewers by sending them the URL of your pull request via email. Please do this after your pull request passes the CI.
-- Please answer reviewers' every comment. If you are to follow the comment, please write "Done"; please give a reason otherwise.
-- If you don't want your reviewers to get overwhelmed by email notifications, you might reply their comments by [in a batch](https://help.github.com/articles/reviewing-proposed-changes-in-a-pull-request/).
-- Reduce the unnecessary commits. Some developers commit often. It is recommended to append a sequence of small changes into one commit by running `git commit --amend` instead of `git commit`.
-
-### Merge Rule
-
-- Please run command `govendor fmt +local` before push changes, more details refer to [govendor](https://github.com/kardianos/govendor)
-- Must run command `make test` before push changes(unit test should be contained), and make sure all unit test and data race test passed
-- Only the passed(unit test and data race test) code can be allowed to submit to Baetyl official repository
-- At least one reviewer approved code can be merged into Baetyl official repository
+- If you want to participate in Baetyl's daily development communication, you are welcome to join [Wechat-for-Baetyl](https://baetyl.bj.bcebos.com/Wechat/Wechat-Baetyl.png)
+- If you have more about feature requirements or bug feedback of Baetyl, please [Submit an issue](https://github.com/baetyl/baetyl/issues)
+- If you have better development advice about Baetyl, please contact us: <baetyl@lists.lfedge.org>
 
 ## Contact us
 
 As the first open edge computing framework in China, Baetyl aims to create a lightweight, secure, reliable and scalable edge computing community that will create a good ecological environment. In order to create a better development of Baetyl, if you have better advice about Baetyl, please contact us:
 
-- If you want to participate in Baetyl's daily development communication, you are welcome to join [Wechat-for-Baetyl](https://baetyl.bj.bcebos.com/Wechat/Wechat-Baetyl.png)
-- If you have better development advice about Baetyl, please send email to <baetyl@lists.lfedge.org>
-- If you have more about feature requirements or bug feedback of Baetyl, please [submit an issue](https://github.com/baetyl/baetyl/issues)
+- Welcome to join [Baetyl's Wechat](https://baetyl.bj.bcebos.com/Wechat/Wechat-Baetyl.png)
+- Welcome to join [Baetyl's LF Edge Community](https://lists.lfedge.org/g/baetyl/topics)
+- Welcome to send email to <baetyl@lists.lfedge.org>
+- Welcome to [submit an issue](https://github.com/baetyl/baetyl/issues)
 
 

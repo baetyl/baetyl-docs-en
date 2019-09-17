@@ -22,10 +22,7 @@ Baetyl, extend cloud computing, data and service seamlessly to edge devices.
    
    overview/Whatis.md
    overview/Design.md
-   overview/Framework.md
-   overview/Extension.md
-   overview/Security.md
-   overview/Control.md
+   overview/Contributing.md
 
 .. toctree::
    :maxdepth: 2
@@ -46,7 +43,7 @@ Baetyl, extend cloud computing, data and service seamlessly to edge devices.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Develop 
+   :caption: Development 
 
    develop/How-to-write-a-python-script-for-python-runtime.md
    develop/How-to-write-a-node-script-for-node-runtime.md
@@ -57,7 +54,7 @@ Baetyl, extend cloud computing, data and service seamlessly to edge devices.
 
 .. toctree::
    :maxdepth: 2
-   :caption: FAQ 
+   :caption: Troubleshooting 
 
    FAQ.md
 

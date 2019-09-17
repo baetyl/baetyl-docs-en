@@ -1,4 +1,4 @@
-# Resources download
+# Download
 
 ## Golang download
 

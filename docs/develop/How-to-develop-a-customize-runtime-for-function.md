@@ -1,9 +1,5 @@
 # Customize Runtime Module
 
-- [Protocol Convention](#protocol-convention)
-- [Configuration Convention](#configuration-convention)
-- [Start/Stop Convention](#startstop-convention)
-
 The function runtime is the carrier of the function execution. The function is executed by dynamically loading the function code, which is strongly related to the language of the function implementation. For example, Python code needs to be called using the Python runtime. This is a multi-language issue. In order to unify the interface and protocol, we finally chose GRPC to create a flexible functional computing framework with its powerful cross-language IDL and high-performance RPC communication capabilities.
 
 In the function compute service (FaaS), `baetyl-function-manager` is responsible for the management and invocation of function instances. The function instance is provided by the function runtime service, and the function runtime service only needs to meet the conventions described below.
