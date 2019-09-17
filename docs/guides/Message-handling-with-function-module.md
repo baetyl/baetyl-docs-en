@@ -3,13 +3,13 @@
 **Statement**
 
 - The operating system as mentioned in this document is Ubuntu18.04.
-- It should be installed for Baetyl when you read this document, more details please refer to [How-to-quick-install-Baetyl](../setup/Quick-Install.md)
+- It should be installed for Baetyl when you read this document, more details please refer to [How-to-quick-install-Baetyl](../install/Quick-Install.md)
 - The version of runtime is Python3.6, and for Python2.7, configuration is the same except fot the language difference when coding the scripts
 - The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.md#mqttbox-download).
-- The docker image used in this document is compiled from the Baetyl source code. More detailed contents please refer to [Build Baetyl from source](../setup/Build-from-Source.md).
+- The docker image used in this document is compiled from the Baetyl source code. More detailed contents please refer to [Build Baetyl from source](../install/Build-from-Source.md).
 - In this article, the service created based on the Hub module is called `localhub` service.
 
-**NOTE**：Darwin can install Baetyl by using Baetyl source code. Please see [How to build image from source code](../setup/Build-from-Source.md).
+**NOTE**：Darwin can install Baetyl by using Baetyl source code. Please see [How to build image from source code](../install/Build-from-Source.md).
 
 Different from the `localhub` service to transfer message among devices(mqtt clients), this document describes the message handling with Local Function Manager service(also include `localhub` service and Python3.6 runtime service). In the document, `localhub` service is used to establish connection between Baetyl and mqtt client, Python3.6 runtime service is used to handle MQTT messages, and the Local Function Manager service is used to combine `localhub` service with Python3.6 runtime service with message context.
 
@@ -203,7 +203,7 @@ _**NOTE**: Any function that appears in the `rules` configuration must be config
 
 According to Step 1, execute `sudo systemctl start baetyl` to start Baetyl in Docker mode and then execute the command `sudo systemctl status baetyl` to check whether baetyl is running. The normal situation is shown as below.
 
-![Baetyl status](../images/setup/systemctl-status.png)
+![Baetyl status](../images/install/systemctl-status.png)
 
 **NOTE**：Darwin can install Baetyl by using Baetyl source code, and excute `sudo baetyl start` to start the Baetyl in Docker container mode.
 

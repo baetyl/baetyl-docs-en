@@ -3,11 +3,11 @@
 **Statement**
 
 - The operating system as mentioned in this document is Ubuntu18.04.
-- It should be installed for Baetyl when you read this document, more details please refer to [How-to-quick-install-Baetyl](../setup/Quick-Install.md)
+- It should be installed for Baetyl when you read this document, more details please refer to [How-to-quick-install-Baetyl](../install/Quick-Install.md)
 - The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.md#mqttbox-download).
 - In this article, the service created based on the Hub module is called `localhub` service.
 
-**NOTE**：Darwin can install Baetyl by using Baetyl source code. Please see [How to build image from source code](../setup/Build-from-Source.md).
+**NOTE**：Darwin can install Baetyl by using Baetyl source code. Please see [How to build image from source code](../install/Build-from-Source.md).
 
 Different from [Device connect to Baetyl with Hub module](./Device-connect-to-hub-module.md), if you want to transfer MQTT messages among multiple MQTT clients, you need to configure the connect information, topic permission, and router rules. More detailed configuration of Hub service, please refer to [Hub service configuration](./Config-interpretation.md#local-hub-configuration).
 

@@ -89,7 +89,7 @@ go version # View Go's version
 
 Go to [official page](https://hub.docker.com/editions/community/docker-ce-desktop-mac) to download the .dmg file you need. Once done, double-click to open and drag docker into the application folder.
 
-![Install On Darwin](../images/setup/docker-install-on-mac.png)
+![Install On Darwin](../images/install/docker-install-on-mac.png)
 
 View the version of installed docker:
 

@@ -3,13 +3,13 @@
 **Statement**
 
 - The operating system as mentioned in this document is Ubuntu18.04.
-- It should be installed for Baetyl when you read this document, more details please refer to [How-to-quick-install-Baetyl](../setup/Quick-Install.md)
+- It should be installed for Baetyl when you read this document, more details please refer to [How-to-quick-install-Baetyl](../install/Quick-Install.md)
 - The MQTT client toolkit as mentioned in this document are [MQTTBOX](../Resources.md) and [MQTT.fx](../Resources.md).
 - The hub and remote module images used have published by [BIE Cloud Management Suite](https://cloud.baidu.com/product/bie.html): `hub.baidubce.com/baetyl/baetyl-hub:latest`、`hub.baidubce.com/baetyl/baetyl-remote-mqtt:latest`
-- Docker images compiled from the Baetyl source code also can be used. More detailed contents please refer to [Build Baetyl from source](../setup/Build-from-Source.md)
+- Docker images compiled from the Baetyl source code also can be used. More detailed contents please refer to [Build Baetyl from source](../install/Build-from-Source.md)
 - The Remote Hub as mentioned in this document is [Baidu IoT Hub](https://cloud.baidu.com/product/iot.html)
 
-**NOTE**：Darwin can install Baetyl by using Baetyl source code. Please see [How to build image from source code](../setup/Build-from-Source.md).
+**NOTE**：Darwin can install Baetyl by using Baetyl source code. Please see [How to build image from source code](../install/Build-from-Source.md).
 
 The Remote Module was developed to meet the needs of the IoT scenario. The Baetyl(via Local Hub Module) can synchronize message with Remote Hub services([Baidu IoT Hub](https://cloud.baidu.com/product/iot.html)) via the Remote Module. That is to say, through the Remote Module, we can either subscribe the message from Remote Hub and publish it to the Local Hub Module or subscribe the message from Local Hub Module and publish it to Remote Hub service. The configuration of Remote Module can refer to [Remote Module Configuration](./Config-interpretation.md).
 
