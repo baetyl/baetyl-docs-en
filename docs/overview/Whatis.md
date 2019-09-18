@@ -49,14 +49,6 @@ As an edge computing platform, **Baetyl** not only provides features such as und
 
 If you are passionate about contributing to open source community, Baetyl will provide you with both code contributions and document contributions. More details, please see: [How to contribute code or document to Baetyl](./Contributing.md).
 
-## Discussion
-
-As the first open edge computing framework in China, Baetyl aims to create a lightweight, secure, reliable and scalable edge computing community that will create a good ecological environment. Here, we offer the following options for you to choose from:
-
-- If you want to participate in Baetyl's daily development communication, you are welcome to join [Wechat-for-Baetyl](https://baetyl.bj.bcebos.com/Wechat/Wechat-Baetyl.png)
-- If you have more about feature requirements or bug feedback of Baetyl, please [Submit an issue](https://github.com/baetyl/baetyl/issues)
-- If you have better development advice about Baetyl, please contact us: <baetyl@lists.lfedge.org>
-
 ## Contact us
 
 As the first open edge computing framework in China, Baetyl aims to create a lightweight, secure, reliable and scalable edge computing community that will create a good ecological environment. In order to create a better development of Baetyl, if you have better advice about Baetyl, please contact us:
