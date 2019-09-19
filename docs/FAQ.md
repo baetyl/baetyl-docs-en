@@ -69,7 +69,7 @@ source ~/.bash_profile
 
 **Q8: Does Baetyl support to push data to Kafka?**
 
-**Suggested Solution**: Support, you can refer to [How to write a python script for python runtime](https://docs.baetyl.io/en/latest/develop/How-to-write-a-python-script-for-python-runtime.html), and subscribe messages from the local Hub module and writing them to Kafka service. Besides, you can also refer to [How to develop a customize module for Baetyl](https://docs.baetyl.io/en/latest/develop/How-to-develop-a-customize-module.html), which subscribes message from the local Hub module and then writes it to Kafka.
+**Suggested Solution**: Support, you can refer to [How to write a python script for python runtime](develop/How-to-write-a-python-script-for-python-runtime.md), and subscribe messages from the local Hub module and writing them to Kafka service. Besides, you can also refer to [How to develop a customize module for Baetyl](develop/How-to-develop-a-customize-module.md), which subscribes message from the local Hub module and then writes it to Kafka.
 
 **Q9: What are the ways to change Baetyl configurations? Can I only make configuration changes through the [BIE](https://cloud.baidu.com/product/bie.html) Cloud Management Suite?**
 
@@ -93,7 +93,7 @@ source ~/.bash_profile
 1. Cloud delivery configuration currently only supports container mode.
 2. If the configuration is sent in the cloud, the hub address configured in `localfunc` should be `localhub` instead of `0.0.0.0`.
 
-According to the above information, the actual error is judged, and the configuration is delivered from the cloud as needed, or by referring to [Configuration Analysis Document](https://docs.baetyl.io/en/latest/guides/Config-interpretation.html) for verification and configuration.
+According to the above information, the actual error is judged, and the configuration is delivered from the cloud as needed, or by referring to [Configuration Analysis Document](guides/Config-interpretation.md) for verification and configuration.
 
 **Q12： How can i use BIE Cloud Management Suite with [CFC(Cloud Function Compute)](https://cloud.baidu.com/product/cfc.html)?**
 
@@ -109,7 +109,7 @@ According to the above information, the actual error is judged, and the configur
 
 1. ports: Port exposed configuration in docker container mode.
 2. listen: Which address the hub module will listen on. In docker container mode, it's means container address. In native process mode, it's means host address.
-3. By referring to [Configuration Analysis Document](https://docs.baetyl.io/en/latest/guides/Config-interpretation.html)
+3. By referring to [Configuration Analysis Document](guides/Config-interpretation.md)
 
 **Q14: How to process data in the cloud platform after message send to [Baidu IoT Hub](https://cloud.baidu.com/product/iot.html) by Baetyl?**
 
@@ -119,7 +119,7 @@ In the cloud platform, [the Rule Engine](https://cloud.baidu.com/product/re.html
 **Q15: How to connect the [Device management](https://cloud.baidu.com/doc/IOT/GettingStarted.html#.E5.88.9B.E5.BB.BA.E7.89.A9.E6.A8.A1.E5.9E.8B) of Baidu IoT Hub?**
 
 **Suggested Solution**:
-The Device management of Baidu IoT Hub does not support ssl authentication. As a temporary solution, you can configure [Remote Feature](https://docs.baetyl.io/en/latest/guides/Message-synchronize-with-iothub-through-remote-module.html) to connect the Device management with username and password authentication manually.
+The Device management of Baidu IoT Hub does not support ssl authentication. As a temporary solution, you can configure [Remote Feature](guides/Message-synchronize-with-iothub-through-remote-module.md) to connect the Device management with username and password authentication manually.
 
 **Q16：If I don't want to lose messages and want to ensure all messages are synchronized to cloud, how can I do?**
 
@@ -128,7 +128,7 @@ The Device management of Baidu IoT Hub does not support ssl authentication. As a
 You must meet the following 2 conditions:
 
 - To make sure messages will be persist in local disk which are sent to local hub, the topic's QoS must be set to 1.
-- To make sure messages will be sent to cloud successful, the QoS of `rules` configuration of Remote module must be set to 1, which includes remote sub's QoS and the pub's QoS. By referring to [Configuration Analysis Document](https://docs.baetyl.io/en/latest/guides/Config-interpretation.html)
+- To make sure messages will be sent to cloud successful, the QoS of `rules` configuration of Remote module must be set to 1, which includes remote sub's QoS and the pub's QoS. By referring to [Configuration Analysis Document](guides/Config-interpretation.md)
 
 **Q17: After the configuration is sent from the cloud to the edge, the default startup mode is `docker` container mode. After modifying `mode: native` in `etc/baetyl/conf.yml` the startup error is similar to the following: "failed to update system: open /Users/ Xxx/baetyl_native/var/run/baetyl/services/agent/lib/baetyl/hub.baidubce.com/baetyl/baetyl-agent:latest/package.yml: no such file or directory".**
 
