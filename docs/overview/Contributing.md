@@ -1,6 +1,6 @@
 # Contributing
 
-Welcome to Baetyl of Baidu Open Source Project. To contribute to Baetyl, please follow the process below.
+Welcome to Baetyl Open Source Project. To contribute to Baetyl, please follow the process below.
 
 We sincerely appreciate your contribution. This document explains our workflow and work style.
 
