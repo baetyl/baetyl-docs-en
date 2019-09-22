@@ -5,7 +5,7 @@
 - The operating system as mentioned in this document is Ubuntu18.04.
 - It should be installed for Baetyl when you read this document, more details please refer to [How-to-quick-install-Baetyl](../install/Quick-Install.md)
 - The version of runtime is Python3.6, and for Python2.7, configuration is the same except fot the language difference when coding the scripts
-- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.md#mqttbox-download).
+- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.html#mqttbox-download).
 - The docker image used in this document is compiled from the Baetyl source code. More detailed contents please refer to [Build Baetyl from source](../install/Build-from-Source.md).
 - In this article, the service created based on the Hub module is called `localhub` service.
 

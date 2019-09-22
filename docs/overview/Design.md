@@ -22,8 +22,8 @@ At present, Baetyl has the following official modules:
 - [baetyl-remote-mqtt](#baetyl-remote-mqtt): Provides a bridge services for synchronizing messages between Hub and remote MQTT services.
 - [baetyl-function-manager](#baetyl-function-manager): Provides function services for function instance management and message-triggered function calls.
 - [baetyl-function-python27](#baetyl-function-python27): Provides a GRPC micro-service that loads Python scripts based on Python2.7 runtime that can be managed by baetyl-function-manager as a function instance provider.
-- [baetyl-function-python36](#baetyl-function-python36)：Provides a GRPC micro-service that loads Python scripts based on Python3.6 runtime that can be managed by baetyl-function-manager as a function instance provider.
-- [baetyl-function-node85](#baetyl-function-node85)：Provides a GRPC micro-service that loads javascripts based on Node8.5 runtime that can be managed by baetyl-function-manager as a function instance provider.
+- [baetyl-function-python36](#baetyl-function-python36): Provides a GRPC micro-service that loads Python scripts based on Python3.6 runtime that can be managed by baetyl-function-manager as a function instance provider.
+- [baetyl-function-node85](#baetyl-function-node85): Provides a GRPC micro-service that loads javascripts based on Node8.5 runtime that can be managed by baetyl-function-manager as a function instance provider.
 
 Structure Diagram:
 
@@ -121,10 +121,10 @@ The Baetyl Master exposes a set of RESTful APIs, adopts HTTP/1. By default, Unix
 
 For the service instance, after the instance is started, you can get the API Server address of the Baetyl Master, the name and Token of the service, and the name of the instance from the environment variable. For details, see [Environment Variable](#environment-variable).
 
-The Header key is as follows：
+The Header key is as follows: 
 
-- x-openedge-username：service name as username
-- x-openedge-password：dynamic token as password
+- x-openedge-username: service name as username
+- x-openedge-password: dynamic token as password
 
 The following are the currently available interfaces:
 
@@ -302,17 +302,17 @@ The subsequent JSON that `baetyl-agent` reports to the cloud is as follows, the 
 
 Baetyl currently sets the following system environment variables for the service instance:
 
-- OPENEDGE_HOST_OS: Operate system of the device (host) where Baetyl is located
-- OPENEDGE_HOST_ID：Host ID of the device (host) where Baetyl is located, can be used as device fingerprint
-- OPENEDGE_MASTER_API: API Server address of the Baetyl Master
-- OPENEDGE_MASTER_API_VERSION：API version of the Baetyl Master
-- OPENEDGE_RUNNING_MODE: Service running mode adopted by the Baetyl Master
-- OPENEDGE_SERVICE_NAME: The name of the service
-- OPENEDGE_SERVICE_TOKEN: Dynamically assigned Token
-- OPENEDGE_SERVICE_INSTANCE_NAME：The name of the instance of the service
-- OPENEDGE_SERVICE_INSTANCE_ADDRESS：The address of the instance of the service
+- BAETYL_HOST_OS: Operate system of the device (host) where Baetyl is located
+- BAETYL_HOST_ID: ID of the device (host) where Baetyl is located, can be used as device fingerprint
+- BAETYL_MASTER_API_ADDRESS: API Server address of the Baetyl Master
+- BAETYL_MASTER_API_VERSION: API version of the Baetyl Master
+- BAETYL_SERVICE_MODE: Service running mode adopted by the Baetyl Master
+- BAETYL_SERVICE_NAME: The name of the service
+- BAETYL_SERVICE_TOKEN: Dynamically assigned Token
+- BAETYL_SERVICE_INSTANCE_NAME: The name of the instance of the service
+- BAETYL_SERVICE_INSTANCE_ADDRESS: The address of the instance of the service
 
-The official function manager service is to connect to the Baetyl Master by reading `OPENEDGE_MASTER_API`. For example, the `OPENEDGE_MASTER_API` under Linux system is `unix:///var/run/baetyl.sock`; In the container mode under other systems, the default value of `OPENEDGE_MASTER_API` is `tcp://host.docker.internal:50050`; In the process mode under other systems, the default value of `OPENEDGE_MASTER_API` is `tcp://127.0.0.1:50050`.
+The official function manager service is to connect to the Baetyl Master by reading `BAETYL_MASTER_API_ADDRESS`. For example, the `BAETYL_MASTER_API_ADDRESS` under Linux system is `unix:///var/run/baetyl.sock`; In the container mode under other systems, the default value of `BAETYL_MASTER_API_ADDRESS` is `tcp://host.docker.internal:50050`; In the process mode under other systems, the default value of `BAETYL_MASTER_API_ADDRESS` is `tcp://127.0.0.1:50050`.
 
 _**NOTE**: Environment variables configured in the application will be overwritten if they are the same as the above system environment variables._
 
@@ -446,7 +446,7 @@ exports.handler = (event, context, callback) => {
 };
 ```
 
-_**提示**：In the native process mode, to run index.js provided in the example of this project, you need to install **Node8.5**._
+_**提示**: In the native process mode, to run index.js provided in the example of this project, you need to install **Node8.5**._
 
 ### baetyl-remote-mqtt
 

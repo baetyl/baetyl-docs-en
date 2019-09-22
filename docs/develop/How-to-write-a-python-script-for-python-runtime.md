@@ -4,7 +4,7 @@
 
 - The operating system as mentioned in this document is Ubuntu18.04.
 - The version of runtime is Python3.6, and for Python2.7, configuration is the same except for the language difference when coding the scripts
-- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.md#mqttbox-download).
+- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.html#mqttbox-download).
 - In this article, the service created based on the Hub module is called `localhub` service. And for the test case mentioned here, the `localhub` service, function calculation service, and other services are configured as follows:
 
 ```yaml

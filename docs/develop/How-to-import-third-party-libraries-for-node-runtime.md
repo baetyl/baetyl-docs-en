@@ -4,7 +4,7 @@
 
 - The operating system as mentioned in this document is Ubuntu18.04.
 - The version of runtime is Node8.5
-- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.md#mqttbox-download).
+- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.html#mqttbox-download).
 - In this document, we give an example about how import the third-party library [`Lodash`](https://www.lodashjs.com/).
 - In this article, the service created based on the Hub module is called `localhub` service. And for the test case mentioned here, the `localhub` service, function calculation service, and other services are configured as follows:
 

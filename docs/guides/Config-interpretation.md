@@ -15,7 +15,7 @@ The Master configuration and application configuration are separated. The defaul
 mode: The default value is `docker`, running mode of services. **docker** container mode or **native** process mode
 grace: The default value is `30s`, the timeout for waiting services to gracefully exit.
 server: API Server configuration of Master.
-  address: The default value can be read from environment variable `OPENEDGE_MASTER_API`, address of API Server.
+  address: The default value can be read from environment variable `BAETYL_MASTER_API_ADDRESS`, address of API Server.
   timeout: The default value is `30s`, timeout of API Server.
 logger: Logger configuration
   path: The default is `empty` (none configuration), that is, it does not write to the file. If the path is specified, it writes to the file.
