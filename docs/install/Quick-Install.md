@@ -1,6 +1,6 @@
 # Quick Install Baetyl
 
-Compared to manually download software in previous version, it supports installing `Baetyl` through package manager in latest version(0.1.5). With this method, users can quickly install `Baetyl` by simply typing a few commands at terminal.
+Compared to manually download software in previous version, it supports installing `Baetyl` through package manager in newer version. With this method, users can quickly install `Baetyl` by simply typing a few commands at terminal.
 
 Installation packages are provided for Ubuntu16.04, Ubuntu18.04, Debian9, CentOS7 and Raspbian-stretch currently. The supported platforms are amd64, i386, armv7l, and arm64.
 
@@ -34,24 +34,6 @@ curl -sSL http://dl.baetyl.io/install.sh | sudo -E bash -
 
 If everything is ok, Baetyl will be installed on the `/usr/local` directory after the execution is complete.
 
-The latest version of Baetyl uses `Systemd` as a daemon, and users can start Baetyl with the following command:
-
-```shell
-sudo systemctl start baetyl
-```
-
-stop Baetyl:
-
-```shell
-sudo systemctl stop baetyl
-```
-
-If users only want to run Baetyl in the foreground, execute the following command::
-
-```shell
-sudo baetyl start
-```
-
 ## Import the example configuration (optional)
 
 As an edge computing framework, Baetyl provides MQTT connect service through hub module, provides local functional service through function manager module and some runtime modules like python27, python36, nodejs85, sql and so on. What's more, all the modules are started by Baetyl main program through a configuration file. More detailed contents about the module's configuration please refer to [Configuration Interpretation](../guides/Config-interpretation.md) for further information.
@@ -65,6 +47,32 @@ curl -sSL http://dl.baetyl.io/install_with_docker_example.sh | sudo -E bash -
 The example configuration is for learning and testing purposes only. Users should perform on-demand configuration according to actual working scenarios.
 
 There is no need to import any configuration files if no modules need to launch.
+
+## Start Baetyl
+
+The newer version of Baetyl uses `Systemd` as a daemon, and users can start Baetyl with the following command:
+
+```shell
+sudo systemctl start baetyl
+```
+
+If you have previously installed Baetyl or imported a new configuration file, it is recommended to use the reboot method:
+
+```shell
+sudo systemctl restart baetyl
+```
+
+Stop Baetyl:
+
+```shell
+sudo systemctl stop baetyl
+```
+
+If users only want to run Baetyl in the foreground, execute the following command::
+
+```shell
+sudo baetyl start
+```
 
 ## Verify successful installation
 
