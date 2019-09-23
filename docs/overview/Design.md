@@ -446,7 +446,7 @@ exports.handler = (event, context, callback) => {
 };
 ```
 
-_**提示**: In the native process mode, to run index.js provided in the example of this project, you need to install **Node8.5**._
+_**NOTE**: In the native process mode, to run index.js provided in the example of this project, you need to install **Node8.5**._
 
 ### baetyl-remote-mqtt
 
