@@ -2,7 +2,7 @@
 
 **Statement**
 
-- The operating system as mentioned in this document is Ubuntu18.04.
+- The operating system as mentioned in this document is Ubuntu16.04.
 - The version of runtime is Python3.6, and for Python2.7, configuration is the same except for the language difference when coding the scripts
 - The MQTT client toolkit as mentioned in this document is [MQTTBox](../Resources.html#mqttbox-download).
 - In this article, the service created based on the Hub module is called `localhub` service. And for the test case mentioned here, the `localhub` service, function calculation service, and other services are configured as follows:
@@ -55,7 +55,7 @@ functions:
 version: v0
 services:
   - name: localhub
-    image: baetyl-hub
+    image: hub.baidubce.com/baetyl/baetyl-hub
     replica: 1
     ports:
       - 1883:1883
@@ -68,7 +68,7 @@ services:
       - name: localhub-log
         path: var/log/baetyl
   - name: function-manager
-    image: baetyl-function-manager
+    image: hub.baidubce.com/baetyl/baetyl-function-manager
     replica: 1
     mounts:
       - name: function-manager-conf
@@ -77,7 +77,7 @@ services:
       - name: function-manager-log
         path: var/log/baetyl
   - name: function-sayhi3
-    image: baetyl-function-python36
+    image: hub.baidubce.com/baetyl/baetyl-function-python36
     replica: 0
     mounts:
       - name: function-sayhi-conf
@@ -166,7 +166,7 @@ def handler(event, context):
         result['type'] = 'dict'
         result['say'] = 'hello world'
     else:
-        result['msg'] = event
+        result['msg'] = event.decode("utf-8")
         result['type'] = 'non-dict'
         result['say'] = 'hello world'
 

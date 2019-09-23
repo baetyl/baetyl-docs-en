@@ -2,7 +2,7 @@
 
 **Statement**：
 
-- The operating system as mentioned in this document is Ubuntu18.04.
+- The operating system as mentioned in this document is Ubuntu16.04.
 - The version of runtime is Node8.5
 - The MQTT client toolkit as mentioned in this document is [MQTTBox](../Resources.html#mqttbox-download).
 - In this document, we give an example about how import the third-party library [`Lodash`](https://www.lodashjs.com/).
@@ -49,7 +49,7 @@ functions:
 version: v0
 services:
   - name: localhub
-    image: baetyl-hub
+    image: hub.baidubce.com/baetyl/baetyl-hub
     replica: 1
     ports:
       - 1883:1883
@@ -62,7 +62,7 @@ services:
       - name: localhub-log
         path: var/log/baetyl
   - name: function-manager
-    image: baetyl-function-manager
+    image: hub.baidubce.com/baetyl/baetyl-function-manager
     replica: 1
     mounts:
       - name: function-manager-conf
@@ -71,7 +71,7 @@ services:
       - name: function-manager-log
         path: var/log/baetyl
   - name: function-sayhi
-    image: baetyl-function-node85
+    image: hub.baidubce.com/baetyl/baetyl-function-node85
     replica: 0
     mounts:
       - name: function-sayjs-conf
@@ -168,7 +168,7 @@ First define the following json data as an input message:
     "users": [
         { "user": "barney", "age": 36, "active": true  },
         { "user": "fred",   "age": 40, "active": false },
-        { "user": 'Jane',   "age": 32, "active": true  }
+        { "user": "Jane",   "age": 32, "active": true  }
     ]
 }
 ```
