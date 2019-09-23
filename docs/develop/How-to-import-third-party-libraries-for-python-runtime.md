@@ -2,7 +2,7 @@
 
 **Statement**
 
-- The operating system as mentioned in this document is Ubuntu18.04.
+- The operating system as mentioned in this document is Ubuntu16.04.
 - The version of runtime is Python3.6, and for Python2.7, configurations are the same except for the language differences when coding the scripts.
 - The MQTT client toolkit as mentioned in this document is [MQTTBox](../Resources.html#mqttbox-download).
 - In this document, the third-party libraries we'll import are [`requests`](https://pypi.org/project/requests) and [`Pytorch`](https://pytorch.org/).
@@ -49,7 +49,7 @@ functions:
 version: v0
 services:
   - name: localhub
-    image: baetyl-hub
+    image: hub.baidubce.com/baetyl/baetyl-hub
     replica: 1
     ports:
       - 1883:1883
@@ -62,7 +62,7 @@ services:
       - name: localhub-log
         path: var/log/baetyl
   - name: function-manager
-    image: baetyl-function-manager
+    image: hub.baidubce.com/baetyl/baetyl-function-manager
     replica: 1
     mounts:
       - name: function-manager-conf
@@ -71,7 +71,7 @@ services:
       - name: function-manager-log
         path: var/log/baetyl
   - name: function-sayhi3
-    image: baetyl-function-python36
+    image: hub.baidubce.com/baetyl/baetyl-function-python36
     replica: 0
     mounts:
       - name: function-sayhi-conf
@@ -116,7 +116,7 @@ pip download requests
 - Step 2: inflate the downloaded `.whl` files for getting the source packages, then remove useless `.whl` files and package-description files
 
 ```shell
-unzip -d . "*.whl"
+unzip \*.whl
 rm -rf *.whl *.dist-info
 ```
 
@@ -142,7 +142,7 @@ If the above operations are normal, the resulting script directory structure is 
 
 ![the directory of the Python script](../images/develop/python-third-lib-dir-requests.png)
 
-Now we write the Python script `get.py` to get the headers information of [https://baetyl.io](https://baetyl.io), assuming the trigger condition is that Python3.6 runtime receives the "A" command from the `localhub` service. More detailed contents are as follows:
+Now we write the Python script `get.py` to get the headers information of [https://baidu.com](https://baidu.com), assuming the trigger condition is that Python3.6 runtime receives the "A" command from the `localhub` service. More detailed contents are as follows:
 
 ```python
 #!/usr/bin/env python3
@@ -156,7 +156,7 @@ def handler(event, context):
     """
     if 'action' in event:
         if event['action'] == 'A':
-            r = requests.get('https://baetyl.io')
+            r = requests.get('https://baidu.com')
             if str(r.status_code) == '200':
                 event['info'] = dict(r.headers)
             else:
@@ -179,7 +179,7 @@ functions:
     codedir: 'var/db/baetyl/function-sayhi'
 ```
 
-As above, after receiving the message publish to the topic `py`, the `localhub` service will call the `get.py` script to handle, and following it publish the result to the topic `py/hi`. So in the test case, we use MQTTBox to subscribe the topic `py/hi` and publish the message `{"action": "A"}` to the `localhub` service by the topic `py`. If everything works correctly, MQTTBox can receive the message of the topic `py/hi` which contains the headers information of [https://baetyl.io](https://baetyl.io) as shown below.
+As above, after receiving the message publish to the topic `py`, the `localhub` service will call the `get.py` script to handle, and following it publish the result to the topic `py/hi`. So in the test case, we use MQTTBox to subscribe the topic `py/hi` and publish the message `{"action": "A"}` to the `localhub` service by the topic `py`. If everything works correctly, MQTTBox can receive the message of the topic `py/hi` which contains the headers information of [https://baidu.com](https://baidu.com) as shown below.
 
 ![Get the header information of https://baetyl.io](../images/develop/write-python-script-third-lib-requests.png)
 
@@ -197,7 +197,7 @@ pip3 download torch torchvision
 - Step 2: inflate the downloaded `.whl` files for getting the source packages, then remove useless `.whl` files and package-description files
 
 ```shell
-unzip -d . *.whl
+unzip \*.whl
 rm -rf *.whl *.dist-info
 ```
 
