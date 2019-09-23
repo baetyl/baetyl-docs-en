@@ -2,41 +2,37 @@
 
 **Statement**
 
-- The operating system as mentioned in this document is Ubuntu18.04.
-- It should be installed for Baetyl when you read this document, more details please refer to [How-to-quick-install-Baetyl](../install/Quick-Install.md)
+- The operating system as mentioned in this document is Ubuntu 18.04.
 - The MQTT client toolkit as mentioned in this document is [MQTTBox](../Resources.html#mqttbox-download).
-- In this article, the service created based on the Hub service is called `localhub` service.
 
 **NOTE**：Darwin can install Baetyl by using Baetyl source code. Please see [How to build image from source code](../install/Build-from-Source.md).
 
 Different from [Device connect to Baetyl with Hub service](./Device-connect-to-hub-module.md), if you want to transfer MQTT messages among multiple MQTT clients, you need to configure the connect information, topic permission, and router rules. More detailed configuration of Hub service, please refer to [Hub service configuration](./Config-interpretation.html#local-hub-configuration).
 
-This document uses the TCP connection method as an example to test the message routing and forwarding capabilities of the `localhub` service.
+This document uses the TCP connection method as an example to test the message routing and forwarding capabilities of the Hub service.
 
 ## Workflow
 
-- Step 1：Startup Baetyl in docker container mode.
-- Step 2：MQTTBox connect to `localhub` Service by TCP connection method, more detailed contents please refer to [Device connect to Baetyl with Hub service](./Device-connect-to-hub-module.md).
-  - If connect successfully, then subscribe the MQTT topic due to the configuration of `localhub` Service.
-  - If connect unsuccessfully, then retry `Step 2` operation until it connect successfully.
-- Step 3：Check the publishing and receiving messages via MQTTBox.
+- Step 1: Install Baetyl and its example configuration, more details please refer to [How-to-quick-install-Baetyl](../install/Quick-Install.md)
+- Step 2: Modify the configuration according to the usage requirements, and then execute `sudo systemctl start baetyl` to start the Baetyl in Docker container mode, or execute `sudo systemctl restart baetyl` to restart the Baetyl. Then execute the command `sudo systemctl status baetyl` to check whether baetyl is running.
+- Step 3：MQTTBox connect to Hub Service by TCP connection method, more detailed contents please refer to [Device connect to Baetyl with Hub service](./Device-connect-to-hub-module.md).
+  - If connect successfully, then subscribe the MQTT topic due to the configuration of Hub Service.
+  - If connect unsuccessfully, then retry `Step 3` operation until it connect successfully.
+- Step 4：Check the publishing and receiving messages via MQTTBox.
 
 ## Message Routing Test
 
-Configuration file location for the Baetyl main program is: `var/db/baetyl/application.yml`.
-
-The configuration of Baetyl Master are as follows:
+The Baetyl application configuration is replaced with the following configuration:
 
 ```yaml
-# The configuration of localhub service
+# /usr/local/var/db/baetyl/application.yml
 version: V2
 services:
   - name: hub
-    image: 'hub.baidubce.com/baetyl/baetyl-hub:latest'
+    image: 'hub.baidubce.com/baetyl/baetyl-hub'
     replica: 1
     ports:
       - '1883:1883'
-    env: {}
     mounts:
       - name: localhub-conf
         path: etc/baetyl
@@ -54,12 +50,10 @@ volumes:
     path: var/db/baetyl/localhub_data
 ```
 
-Configuration file location for the Baetyl Hub service is: `var/db/baetyl/localhub-conf/service.yml`.
-
-The configuration of Baetyl Hub Module are as follows:
+The Baetyl Hub service configuration is replaced with the following configuration:
 
 ```yaml
-# localhub 服务配置
+# /usr/local/var/db/baetyl/localhub-conf/service.yml
 listen:
   - tcp://0.0.0.0:1883
 principals:
@@ -78,17 +72,6 @@ subscriptions:
 logger:
   path: var/log/baetyl/service.log
   level: 'debug'
-```
-
-The directory of configuration tree are as follows:
-
-```shell
-var
-└── db
-    └── baetyl
-        ├── application.yml
-        └── localhub-conf
-            └── service.yml
 ```
 
 As configured above, message routing rules depends on the `subscriptions` configuration item, which means that messages published to the topic `t` will be forwarded to all devices(users, or mqtt clients) that subscribe the topic `t/topic`.
@@ -125,14 +108,14 @@ The message transferring and routing workflow among devices are as follows:
 
 ![Message transfer test among devices](../images/guides/trans/trans-flow.png)
 
-Specifically, as shown in the above figure, **client1**, **client2**, and **client3** respectively establish a connection to Baetyl with `localhub` Service, **client1** has the permission to publish messages to the topic `t`, and **client2** and **client3** respectively have the permission to subscribe topic `t` and `t/topic`.
+Specifically, as shown in the above figure, **client1**, **client2**, and **client3** respectively establish a connection to Baetyl with Hub Service, **client1** has the permission to publish messages to the topic `t`, and **client2** and **client3** respectively have the permission to subscribe topic `t` and `t/topic`.
 
-Once the connection to Baetyl for the above three clients with `localhub` Service is established, as the configuration of the above three clients, **client2** and **client3** will respectively get the message from **client1** published to the topic `t` to `localhub` Service.
+Once the connection to Baetyl for the above three clients with Hub Service is established, as the configuration of the above three clients, **client2** and **client3** will respectively get the message from **client1** published to the topic `t` to Hub Service.
 
-In particular, **client1**, **client2**, and **client3** can be combined into one client, and the new client will have the permission to publish messages to the topic `t`, with permissions to subscribe messages to the topic `t` and `t/topic`. Here, using MQTTBox as the new client, click the `Add subscriber` button to subscribe the topic `t` and `t/topic`. More detailed contents are as shown below.
+In particular, **client1**, **client2**, and **client3** can be combined into one client, and the new client will have the permission to publish messages to the topic `t`, with permissions to subscribe messages to the topic `t` and `t/topic`. Here, using MQTTBox as the new client, click the `Add subscriber` button to subscribe the topic `t` and `t/topic`. 
 
-![The configuration of MQTTBox about message transfer test among devices](../images/guides/trans/mqttbox-tcp-trans-sub-config.png)
-
-As shown above, it can be found that after establishing a connection with Baetyl depend on the `localhub` Service by TCP connection method, the MQTTBox successfully subscribes the topic `t` and `t/topic`, and then clicks the `Publish` button to publish message(`This message is From baetyl.`) to the topic `t`, you will find this message is received by MQTTBox with the subscribed topics `t` and `t/topic`. More detailed contents are as below.
+Then clicks the `Publish` button to publish message with the payload `This is a new message.` and with the topic `t` to Hub service, you will find this message is received by MQTTBox with the subscribed topics `t` and `t/topic`. More detailed contents are as below.
 
 ![MQTTBox received message successfully](../images/guides/trans/mqttbox-tcp-trans-message-success.png)
+
+In summary, the message forwarding and routing test between devices based on Hub service is completed through MQTTBox.

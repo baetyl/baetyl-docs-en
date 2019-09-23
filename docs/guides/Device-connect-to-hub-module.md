@@ -23,7 +23,7 @@ The complete configuration reference for [Hub Module Configuration](./Config-int
 
 ## Connection Test
 
-If the Baetyl's example configuration is installed according to `Step 1`, to modify the configuration of the application and Hub service as follows.
+If the Baetyl's example configuration is installed according to `Step 1`, to modify the configuration of the application and Hub service.
 
 ### Baetyl Application Configuration
 
