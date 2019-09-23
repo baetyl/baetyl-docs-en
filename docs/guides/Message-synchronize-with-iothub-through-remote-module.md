@@ -5,7 +5,7 @@
 - The operating system as mentioned in this document is Ubuntu18.04.
 - It should be installed for Baetyl when you read this document, more details please refer to [How-to-quick-install-Baetyl](../install/Quick-Install.md)
 - The MQTT client toolkit as mentioned in this document are [MQTTBox](../Resources.md) and [MQTT.fx](../Resources.md).
-- The hub and remote module images used have published by [BIE Cloud Management Suite](https://cloud.baidu.com/product/bie.html): `hub.baidubce.com/baetyl/baetyl-hub:latest`、`hub.baidubce.com/baetyl/baetyl-remote-mqtt:latest`
+- The hub and remote service images used have published by [BIE Cloud Management Suite](https://cloud.baidu.com/product/bie.html): `hub.baidubce.com/baetyl/baetyl-hub:latest`、`hub.baidubce.com/baetyl/baetyl-remote-mqtt:latest`
 - Docker images compiled from the Baetyl source code also can be used. More detailed contents please refer to [Build Baetyl from source](../install/Build-from-Source.md)
 - The Remote Hub as mentioned in this document is [Baidu IoT Hub](https://cloud.baidu.com/product/iot.html)
 
@@ -87,9 +87,9 @@ volumes:
     path: var/db/baetyl/remote-iothub-log
 ```
 
-Configuration file location for the Remote module is: `var/db/baetyl/remote-iothub-conf/application.yml`.
+Configuration file location for the Remote service is: `var/db/baetyl/remote-iothub-conf/application.yml`.
 
-The configuration of Baetyl Remote module are as follows:
+The configuration of Baetyl Remote service are as follows:
 
 ```yaml
 name: remote-iothub
@@ -119,7 +119,7 @@ logger:
   level: 'debug'
 ```
 
-According to the configuration of the above, it means that the Remote module subscribes the topic `t1` from the Local Hub module, subscribes the topic `t2` from Baidu IoT Hub. When MQTTBox publishes a message to the topic `t1`, the Local Hub module will receive this message and forward it to Baidu IoT Hub via Remote module, and MQTT.fx will also receive this message(suppose MQTT.fx has already subscribed the topic `t1` before) from Baidu IoT Hub. Similarly, When we use MQTT.fx to publish a message to the topic `t2`, then Baidu IoT Hub will receive it and forward it to the Local Hub module via Remote module. Finally, MQTTBox will receive this message(suppose MQTTBox has already subscribed the topic `t2` before).
+According to the configuration of the above, it means that the Remote service subscribes the topic `t1` from the Local Hub service, subscribes the topic `t2` from Baidu IoT Hub. When MQTTBox publishes a message to the topic `t1`, the Local Hub service will receive this message and forward it to Baidu IoT Hub via Remote service, and MQTT.fx will also receive this message(suppose MQTT.fx has already subscribed the topic `t1` before) from Baidu IoT Hub. Similarly, When we use MQTT.fx to publish a message to the topic `t2`, then Baidu IoT Hub will receive it and forward it to the Local Hub service via Remote service. Finally, MQTTBox will receive this message(suppose MQTTBox has already subscribed the topic `t2` before).
 
 In a word, from MQTTBox publishes a message to the topic `t1`, to MQTT.fx receives the message, the routing path of the message are as follows.
 

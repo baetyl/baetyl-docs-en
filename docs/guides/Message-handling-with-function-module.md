@@ -7,7 +7,7 @@
 - The version of runtime is Python3.6, and for Python2.7, configuration is the same except fot the language difference when coding the scripts
 - The MQTT client toolkit as mentioned in this document is [MQTTBox](../Resources.html#mqttbox-download).
 - The docker image used in this document is compiled from the Baetyl source code. More detailed contents please refer to [Build Baetyl from source](../install/Build-from-Source.md).
-- In this article, the service created based on the Hub module is called `localhub` service.
+- In this article, the service created based on the Hub service is called `localhub` service.
 
 **NOTE**：Darwin can install Baetyl by using Baetyl source code. Please see [How to build image from source code](../install/Build-from-Source.md).
 
@@ -18,7 +18,7 @@ This document will take the TCP connection method as an example to show the mess
 ## Workflow
 
 - Step 1：Execute `sudo systemctl start baetyl` to start the Baetyl in Docker container mode. Then execute the command `sudo systemctl status baetyl` to check whether baetyl is running.
-- Step 2：MQTTBox connect to `localhub` Service by TCP connection method, more detailed contents please refer to [Device connect to Baetyl with Hub module](./Device-connect-to-hub-module.md)
+- Step 2：MQTTBox connect to `localhub` Service by TCP connection method, more detailed contents please refer to [Device connect to Baetyl with Hub service](./Device-connect-to-hub-service.md)
   - If connect successfully, then subscribe the MQTT topic due to the configuration of `localhub` Service, and observe the log of Baetyl.
     - If the Baetyl's log shows that the Python Runtime Service has been started, it indicates that the published message was handled by the specified function.
     - If the Baetyl's log shows that the Python Runtime Service has not been started, then retry it until the Python Runtime Service has been started.
@@ -88,7 +88,7 @@ volumes:
     path: var/db/baetyl/function-sayhi-code
 ```
 
-Configuration file location for the Baetyl Hub module is: `var/db/baetyl/localhub-conf/service.yml`.
+Configuration file location for the Baetyl Hub service is: `var/db/baetyl/localhub-conf/service.yml`.
 
 The configuration of Baetyl Hub Module are as follows:
 
@@ -145,7 +145,7 @@ functions:
 #!/usr/bin/env python3
 #-*- coding:utf-8 -*-
 """
-module to say hi
+service to say hi
 """
 
 import os

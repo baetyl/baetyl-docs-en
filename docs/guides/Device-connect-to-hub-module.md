@@ -1,12 +1,11 @@
-# Device connect to Baetyl with Hub module
+# Device connect to Baetyl with Hub service
 
 **Statement**:
 
-- The device system used in this test is Ubuntu18.04
-- It should be installed for Baetyl when you read this document, more details please refer to [How-to-quick-install-Baetyl](../install/Quick-Install.md)
+- The device system used in this test is Ubuntu 18.04
 - MQTT.fx and MQTTBox are MQTT Clients in this test, which [MQTT.fx](../Resources.md) used for TCP and SSL connection test and [MQTTBox](../Resources.md) used for WS (Websocket) connection test.
-- The hub module image used is the official image published in the Baetyl Cloud Management Suite: `hub.baidubce.com/baetyl/baetyl-hub:latest`
-- You can also compile the required Hub module image by using Baetyl source code. Please see [How to build image from source code](../install/Build-from-Source.md)
+- The hub service image used is the official image published in the Baetyl Cloud Management Suite: `hub.baidubce.com/baetyl/baetyl-hub`
+- You can also compile the required Hub service image by using Baetyl source code. Please see [How to build image from source code](../install/Build-from-Source.md)
 
 The complete configuration reference for [Hub Module Configuration](./Config-interpretation.md).
 
@@ -14,30 +13,28 @@ The complete configuration reference for [Hub Module Configuration](./Config-int
 
 ## Workflow
 
-- Step 1: Write the configuration according to the usage requirements, and then execute `sudo systemctl start baetyl`(you should install Baetyl first, more detailed contents can refer to [How-to-quick-install-Baetyl](../install/Quick-Install.md)) to start the Baetyl in Docker container mode. Then execute the command `sudo systemctl status baetyl` to check whether baetyl is running.
-- Step 2: Configure the MQTT Client according to the connection protocol selected.
+- Step 1: Install Baetyl and its example configuration, more details please refer to [How-to-quick-install-Baetyl](../install/Quick-Install.md)
+- Step 2: Modify the configuration according to the usage requirements, and then execute `sudo systemctl start baetyl` to start the Baetyl in Docker container mode, or execute `sudo systemctl restart baetyl` to restart the Baetyl. Then execute the command `sudo systemctl status baetyl` to check whether baetyl is running.
+- Step 3: Configure the MQTT Client according to the connection protocol selected.
   - If TCP protocol was selected, you only need to configure the username and password(see the configuration option username and password of principals) and fill in the corresponding port.
   - If SSL protocol was selected, username, private key, certificate and CA should be need. then fill in the corresponding port;
   - If WS protocol was selected, you only need to configure the username, password, and corresponding port.
-- Step 3: Step 3: If all the above steps are normal and operations are correct, you can check the connection status through the log of Baetyl or MQTT Client.
-
-**NOTE**：In the latest version of Baetyl Hub Module, password has been changed to plaintext storage.
+- Step 4: If all the above steps are normal and operations are correct, you can check the connection status through the log of Baetyl or MQTT Client.
 
 ## Connection Test
 
-As mentioned above, Baetyl must be started before the connection test.
+If the Baetyl's example configuration is installed according to `Step 1`, to modify the configuration of the application and Hub service as follows.
 
-### Baetyl Connection Test
+### Baetyl Application Configuration
 
-Configuration file location for the Baetyl main program is: `var/db/baetyl/application.yml`.
-
-The configuration of Baetyl Master are as follows:
+If the official installation method is used, replace the Baetyl application configuration with the following configuration:
 
 ```yaml
+# /usr/local/var/db/baetyl/application.yml
 version: v0
 services:
   - name: localhub
-    image: hub.baidubce.com/baetyl/baetyl-hub:latest
+    image: hub.baidubce.com/baetyl/baetyl-hub
     replica: 1
     ports:
       - 1883:1883
@@ -65,11 +62,10 @@ volumes:
     path: var/db/baetyl/localhub-log
 ```
 
-Configuration file location for the Baetyl Hub module is: `var/db/baetyl/localhub-conf/service.yml`.
-
-The configuration of Baetyl Hub Module are as follows:
+Replace the configuration of the Baetyl Hub service with the following configuration:
 
 ```yaml
+# /usr/local/var/db/baetyl/localhub-conf/service.yml
 listen:
   - tcp://0.0.0.0:1883
   - ssl://0.0.0.0:8883
@@ -104,15 +100,17 @@ logger:
 
 ### Baetyl Startup
 
-According to Step 1, execute `sudo systemctl start baetyl` to start Baetyl in Docker mode and then execute the command `sudo systemctl status baetyl` to check whether baetyl is running. The normal situation is shown as below.
+According to `Step 2`, execute `sudo systemctl start baetyl` to start Baetyl in Docker mode and then execute the command `sudo systemctl status baetyl` to check whether baetyl is running. The normal situation is shown as below.
 
 ![Baetyl status](../images/install/systemctl-status.png)
 
 **NOTE**：Darwin can install Baetyl by using Baetyl source code, and excute `sudo baetyl start` to start the Baetyl in Docker container mode.
 
-![Baetyl startup](../images/guides/connect/master-start.png)
+Look at the log of the Baetyl master by executing `sudo tail -f /usr/local/var/log/baetyl/baetyl.log` as shown below:
 
-As you can see, the image of Hub module has been loaded after Baetyl starts up normally. Alternatively, you can use `docker ps` command to check which docker container is currently running.
+![Baetyl startup](../images/guides/connect/master-start-log.png)
+
+As you can see, the image of Hub service has been loaded after Baetyl starts up normally. Alternatively, you can use `docker ps` command to check which docker container is currently running.
 
 ![docker ps](../images/guides/connect/docker-ps.png)
 
@@ -122,11 +120,11 @@ As mentioned above, when the Hub Module starts, it will open ports 1883, 8883 an
 
 **TCP Connection Test**
 
-Startup MQTT.fx, enter the `Edit Connection Profiles` page, fill in the `Profile Name`, `Broker Address` and `Port` according to the connection configuration of Baetyl Hub module, and then configure the `username` & `password` in User Credentials according to the `principals` configuration. Then click `Apply` button to complete the connection configuration of MQTT.fx with TCP protocol.
+Startup MQTT.fx, enter the `Edit Connection Profiles` page, fill in the `Profile Name`, `Broker Address` and `Port` according to the connection configuration of Baetyl Hub service, and then configure the `username` & `password` in User Credentials according to the `principals` configuration. Then click `Apply` button to complete the connection configuration of MQTT.fx with TCP protocol.
 
 ![TCP connection configuration](../images/guides/connect/mqttbox-tcp-connect-config.png)
 
-Then close the configuration page, select the Profile Name configured, then click `Connect` button, if the connection configuration information matches the `principals` configuration of Baetyl Hub module, you can see the connection success flag which as shown below.
+Then close the configuration page, select the Profile Name configured, then click `Connect` button, if the connection configuration information matches the `principals` configuration of Baetyl Hub service, you can see the connection success flag which as shown below.
 
 ![TCP connection success](../images/guides/connect/mqttbox-tcp-connect-success.png)
 
@@ -138,13 +136,13 @@ Startup MQTT.fx and enter the Edit Connection Profiles page. Similar to the TCP 
 
 ![SSL connection configuration2](../images/guides/connect/mqttbox-ssl-connect-config2.png)
 
-Then close the configuration page, select the Profile Name configured, then click `Connect` button, if the connection configuration information matches the `principals` configuration of Baetyl Hub module, you can see the connection success flag which as shown below.
+Then close the configuration page, select the Profile Name configured, then click `Connect` button, if the connection configuration information matches the `principals` configuration of Baetyl Hub service, you can see the connection success flag which as shown below.
 
 ![SSL connection success](../images/guides/connect/mqttbox-ssl-connect-success.png)
 
 **WS (Websocket) Connection Test**
 
-Startup MQTTBox, enter the Client creation page, select the `ws` protocol, configure the broker address and port according to the Baetyl Hub module, fill in the username and password according to the `principals` configuration option, and click the `save` button. Then complete the connection configuration of MQTTBox in WS connection method which as shown below.
+Startup MQTTBox, enter the Client creation page, select the `ws` protocol, configure the broker address and port according to the Baetyl Hub service, fill in the username and password according to the `principals` configuration option, and click the `save` button. Then complete the connection configuration of MQTTBox in WS connection method which as shown below.
 
 ![WS（Websocket）connection configuration](../images/guides/connect/mqttbox-ws-connect-config.png)
 
@@ -152,4 +150,4 @@ Once the above operation is correct, you can see the sign of successful connecti
 
 ![WS（Websocket）connection success](../images/guides/connect/mqttbox-ws-connect-success.png)
 
-In summary, we successfully completed the connection test for the Baetyl Hub module through MQTT.fx and MQTTBox. In addition, we can also write test scripts to connect to Baetyl Hub through Paho MQTT. For details, please refer to [Related Resources Download](../Resources.md).
+In summary, we successfully completed the connection test for the Baetyl Hub service through MQTT.fx and MQTTBox. In addition, we can also write test scripts to connect to Baetyl Hub through Paho MQTT. For details, please refer to [Related Resources Download](../Resources.md).
