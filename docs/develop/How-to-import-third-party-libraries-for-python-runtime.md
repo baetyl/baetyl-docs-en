@@ -4,7 +4,7 @@
 
 - The operating system as mentioned in this document is Ubuntu18.04.
 - The version of runtime is Python3.6, and for Python2.7, configurations are the same except for the language differences when coding the scripts.
-- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.html#mqttbox-download).
+- The MQTT client toolkit as mentioned in this document is [MQTTBox](../Resources.html#mqttbox-download).
 - In this document, the third-party libraries we'll import are [`requests`](https://pypi.org/project/requests) and [`Pytorch`](https://pytorch.org/).
 - In this article, the service created based on the Hub module is called `localhub` service. And for the test case mentioned here, the `localhub` service, function calculation service, and other services are configured as follows:
 
@@ -179,7 +179,7 @@ functions:
     codedir: 'var/db/baetyl/function-sayhi'
 ```
 
-As above, after receiving the message publish to the topic `py`, the `localhub` service will call the `get.py` script to handle, and following it publish the result to the topic `py/hi`. So in the test case, we use MQTTBOX to subscribe the topic `py/hi` and publish the message `{"action": "A"}` to the `localhub` service by the topic `py`. If everything works correctly, MQTTBOX can receive the message of the topic `py/hi` which contains the headers information of [https://baetyl.io](https://baetyl.io) as shown below.
+As above, after receiving the message publish to the topic `py`, the `localhub` service will call the `get.py` script to handle, and following it publish the result to the topic `py/hi`. So in the test case, we use MQTTBox to subscribe the topic `py/hi` and publish the message `{"action": "A"}` to the `localhub` service by the topic `py`. If everything works correctly, MQTTBox can receive the message of the topic `py/hi` which contains the headers information of [https://baetyl.io](https://baetyl.io) as shown below.
 
 ![Get the header information of https://baetyl.io](../images/develop/write-python-script-third-lib-requests.png)
 
@@ -257,6 +257,6 @@ functions:
     codedir: 'var/db/baetyl/function-sayhi'
 ```
 
-As above, after receiving the message publish to the topic `py`, the `localhub` service will call the `calc.py` script to handle, and following it publish the result to the topic `py/hi`. So in the test case, we use MQTTBOX to subscribe the topic `py/hi` and publish the message `{"action": "B"}` to the `localhub` service by the topic `py`. If everything works correctly, MQTTBOX can receive the message of the topic `py/hi` in which we can get a random tensor as shown below.
+As above, after receiving the message publish to the topic `py`, the `localhub` service will call the `calc.py` script to handle, and following it publish the result to the topic `py/hi`. So in the test case, we use MQTTBox to subscribe the topic `py/hi` and publish the message `{"action": "B"}` to the `localhub` service by the topic `py`. If everything works correctly, MQTTBox can receive the message of the topic `py/hi` in which we can get a random tensor as shown below.
 
 ![generate a random tensor](../images/develop/write-python-script-third-lib-Pytorch.png)

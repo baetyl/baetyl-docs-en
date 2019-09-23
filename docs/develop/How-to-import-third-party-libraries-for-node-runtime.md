@@ -4,7 +4,7 @@
 
 - The operating system as mentioned in this document is Ubuntu18.04.
 - The version of runtime is Node8.5
-- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.html#mqttbox-download).
+- The MQTT client toolkit as mentioned in this document is [MQTTBox](../Resources.html#mqttbox-download).
 - In this document, we give an example about how import the third-party library [`Lodash`](https://www.lodashjs.com/).
 - In this article, the service created based on the Hub module is called `localhub` service. And for the test case mentioned here, the `localhub` service, function calculation service, and other services are configured as follows:
 
@@ -173,7 +173,7 @@ First define the following json data as an input message:
 }
 ```
 
-As above, after the `localhub` service receives the message sent to the topic `node`, it calls `index.js` script to execute the concrete logic to remove repeated elements, filter, sort of array in input data. The result is then fed back to the topic `t/hi` as an MQTT message. We subscribe to the topic `t/hi` via MQTTBOX and we can observe the following message:
+As above, after the `localhub` service receives the message sent to the topic `node`, it calls `index.js` script to execute the concrete logic to remove repeated elements, filter, sort of array in input data. The result is then fed back to the topic `t/hi` as an MQTT message. We subscribe to the topic `t/hi` via MQTTBox and we can observe the following message:
 
 ```javascript
 {

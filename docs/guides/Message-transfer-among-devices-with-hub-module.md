@@ -4,7 +4,7 @@
 
 - The operating system as mentioned in this document is Ubuntu18.04.
 - It should be installed for Baetyl when you read this document, more details please refer to [How-to-quick-install-Baetyl](../install/Quick-Install.md)
-- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.html#mqttbox-download).
+- The MQTT client toolkit as mentioned in this document is [MQTTBox](../Resources.html#mqttbox-download).
 - In this article, the service created based on the Hub module is called `localhub` service.
 
 **NOTE**：Darwin can install Baetyl by using Baetyl source code. Please see [How to build image from source code](../install/Build-from-Source.md).
@@ -16,10 +16,10 @@ This document uses the TCP connection method as an example to test the message r
 ## Workflow
 
 - Step 1：Startup Baetyl in docker container mode.
-- Step 2：MQTTBOX connect to `localhub` Service by TCP connection method, more detailed contents please refer to [Device connect to Baetyl with Hub module](./Device-connect-to-hub-module.md).
+- Step 2：MQTTBox connect to `localhub` Service by TCP connection method, more detailed contents please refer to [Device connect to Baetyl with Hub module](./Device-connect-to-hub-module.md).
   - If connect successfully, then subscribe the MQTT topic due to the configuration of `localhub` Service.
   - If connect unsuccessfully, then retry `Step 2` operation until it connect successfully.
-- Step 3：Check the publishing and receiving messages via MQTTBOX.
+- Step 3：Check the publishing and receiving messages via MQTTBox.
 
 ## Message Routing Test
 
@@ -129,10 +129,10 @@ Specifically, as shown in the above figure, **client1**, **client2**, and **clie
 
 Once the connection to Baetyl for the above three clients with `localhub` Service is established, as the configuration of the above three clients, **client2** and **client3** will respectively get the message from **client1** published to the topic `t` to `localhub` Service.
 
-In particular, **client1**, **client2**, and **client3** can be combined into one client, and the new client will have the permission to publish messages to the topic `t`, with permissions to subscribe messages to the topic `t` and `t/topic`. Here, using MQTTBOX as the new client, click the `Add subscriber` button to subscribe the topic `t` and `t/topic`. More detailed contents are as shown below.
+In particular, **client1**, **client2**, and **client3** can be combined into one client, and the new client will have the permission to publish messages to the topic `t`, with permissions to subscribe messages to the topic `t` and `t/topic`. Here, using MQTTBox as the new client, click the `Add subscriber` button to subscribe the topic `t` and `t/topic`. More detailed contents are as shown below.
 
-![The configuration of MQTTBOX about message transfer test among devices](../images/guides/trans/mqttbox-tcp-trans-sub-config.png)
+![The configuration of MQTTBox about message transfer test among devices](../images/guides/trans/mqttbox-tcp-trans-sub-config.png)
 
-As shown above, it can be found that after establishing a connection with Baetyl depend on the `localhub` Service by TCP connection method, the MQTTBOX successfully subscribes the topic `t` and `t/topic`, and then clicks the `Publish` button to publish message(`This message is From baetyl.`) to the topic `t`, you will find this message is received by MQTTBOX with the subscribed topics `t` and `t/topic`. More detailed contents are as below.
+As shown above, it can be found that after establishing a connection with Baetyl depend on the `localhub` Service by TCP connection method, the MQTTBox successfully subscribes the topic `t` and `t/topic`, and then clicks the `Publish` button to publish message(`This message is From baetyl.`) to the topic `t`, you will find this message is received by MQTTBox with the subscribed topics `t` and `t/topic`. More detailed contents are as below.
 
-![MQTTBOX received message successfully](../images/guides/trans/mqttbox-tcp-trans-message-success.png)
+![MQTTBox received message successfully](../images/guides/trans/mqttbox-tcp-trans-message-success.png)

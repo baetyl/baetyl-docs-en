@@ -75,12 +75,12 @@ source ~/.bash_profile
 
 **Suggested Solution**: Currently, we recommend changing configurations through the BIE Cloud Management Suite, but you can also manually change the configuration file on the core device and then restart Baetyl to take effect.
 
-**Q10：I download MQTTBOX client, extract it to a directory, and copy/move the executable file `MQTTBox` to `/usr/local/bin`(other directory is similar, such as `/usr/bin`, `/bin`, `/usr/sbin`, etc.). But it reports an error of "error while loading shared libraries: libgconf-2.so.4: cannot open shared object file: No such file or directory` when `MQTTBox" start.**
+**Q10：I download MQTTBox client, extract it to a directory, and copy/move the executable file `MQTTBox` to `/usr/local/bin`(other directory is similar, such as `/usr/bin`, `/bin`, `/usr/sbin`, etc.). But it reports an error of "error while loading shared libraries: libgconf-2.so.4: cannot open shared object file: No such file or directory` when `MQTTBox" start.**
 
 **Suggested Solution**：As above description, this is because the lack of `libgconf-2.so.4` library when `MQTTBox` start, and the recommended use is as follows:
 
-- Step 1: Download and extract the MQTTBOX software package;
-- Step 2: `cd /pat/to/MQTTBOX/directory and sudo chmod +x MQTTBox`;
+- Step 1: Download and extract the MQTTBox software package;
+- Step 2: `cd /pat/to/MQTTBox/directory and sudo chmod +x MQTTBox`;
 - Step 3：`sudo ln -s /path/to/MQTTBox /usr/local/bin/MQTTBox`;
 - Step 4：Open terminal and execute the command `MQTTBox`.
 

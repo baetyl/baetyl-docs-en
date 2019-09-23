@@ -5,7 +5,7 @@
 - The operating system as mentioned in this document is Ubuntu18.04.
 - It should be installed for Baetyl when you read this document, more details please refer to [How-to-quick-install-Baetyl](../install/Quick-Install.md)
 - The version of runtime is Python3.6, and for Python2.7, configuration is the same except fot the language difference when coding the scripts
-- The MQTT client toolkit as mentioned in this document is [MQTTBOX](../Resources.html#mqttbox-download).
+- The MQTT client toolkit as mentioned in this document is [MQTTBox](../Resources.html#mqttbox-download).
 - The docker image used in this document is compiled from the Baetyl source code. More detailed contents please refer to [Build Baetyl from source](../install/Build-from-Source.md).
 - In this article, the service created based on the Hub module is called `localhub` service.
 
@@ -18,12 +18,12 @@ This document will take the TCP connection method as an example to show the mess
 ## Workflow
 
 - Step 1：Execute `sudo systemctl start baetyl` to start the Baetyl in Docker container mode. Then execute the command `sudo systemctl status baetyl` to check whether baetyl is running.
-- Step 2：MQTTBOX connect to `localhub` Service by TCP connection method, more detailed contents please refer to [Device connect to Baetyl with Hub module](./Device-connect-to-hub-module.md)
+- Step 2：MQTTBox connect to `localhub` Service by TCP connection method, more detailed contents please refer to [Device connect to Baetyl with Hub module](./Device-connect-to-hub-module.md)
   - If connect successfully, then subscribe the MQTT topic due to the configuration of `localhub` Service, and observe the log of Baetyl.
     - If the Baetyl's log shows that the Python Runtime Service has been started, it indicates that the published message was handled by the specified function.
     - If the Baetyl's log shows that the Python Runtime Service has not been started, then retry it until the Python Runtime Service has been started.
   - If connect unsuccessfully, then retry `Step 2` operation until it connect successfully
-- Step 3：Check the publishing and receiving messages via MQTTBOX.
+- Step 3：Check the publishing and receiving messages via MQTTBox.
 
 ![Workflow of using Local Function Manager Service to handle MQTT messages](../images/guides/process/python-flow.png)
 
@@ -195,7 +195,7 @@ var/
             └── service.yml
 ```
 
-As configured above, if the MQTTBOX has established a connection with Baetyl via the `localhub` Service, the message published to the topic `t` will be handled by `sayhi` function, and the result will be published to the `localhub` Service with the topic `t/hi`. At the same time, the MQTT client subscribed the topic `t/hi` will receive the result message.
+As configured above, if the MQTTBox has established a connection with Baetyl via the `localhub` Service, the message published to the topic `t` will be handled by `sayhi` function, and the result will be published to the `localhub` Service with the topic `t/hi`. At the same time, the MQTT client subscribed the topic `t/hi` will receive the result message.
 
 _**NOTE**: Any function that appears in the `rules` configuration must be configured in the `functions` configuration, otherwise Baetyl will not be started._
 
@@ -215,13 +215,13 @@ Also, we can execute the command `docker ps` to view the list of docker containe
 
 After comparison, it is not difficult to find that the two container modules of the `localhub` Service and the Local Function Manager Service have been successfully loaded at the time of Baetyl startup.
 
-### MQTTBOX Establish a Connection with Baetyl
+### MQTTBox Establish a Connection with Baetyl
 
-Here, using MQTTBOX as the MQTT client, click the `Add subscriber` button to subscribe the topic `t/hi`. And topic `t/hi` is used to receive the result message after `sayhi` function handled. More detailed contents are as shown below.
+Here, using MQTTBox as the MQTT client, click the `Add subscriber` button to subscribe the topic `t/hi`. And topic `t/hi` is used to receive the result message after `sayhi` function handled. More detailed contents are as shown below.
 
-![MQTTBOX connection configuration](../images/guides/process/mqttbox-tcp-process-config.png)
+![MQTTBox connection configuration](../images/guides/process/mqttbox-tcp-process-config.png)
 
-The figure above shows that MQTTBOX has successfully subscribed the topic `t/hi`.
+The figure above shows that MQTTBox has successfully subscribed the topic `t/hi`.
 
 ### Message Handling Check
 
@@ -265,11 +265,11 @@ def handler(event, context):
 
 It can be found that after receiving a message in a dictionary(`dict`) format, the function `sayhi` will handle it and then return the result. The returned result include: environment variable `USER_ID`, function name `functionName`, function call ID `functionInvokeID`, input message subject `messageTopic`, input message message QoS `messageQOS` and other fields.
 
-Here, we publish the message `{"id":10}` to the topic `t` via MQTTBOX, and then observe the receiving message of the topic `t/hi`. More detailed contents are as shown below.
+Here, we publish the message `{"id":10}` to the topic `t` via MQTTBox, and then observe the receiving message of the topic `t/hi`. More detailed contents are as shown below.
 
-![MQTTBOX successfully receive the result via topic `t/hi`](../images/guides/process/mqttbox-tcp-process-success.png)
+![MQTTBox successfully receive the result via topic `t/hi`](../images/guides/process/mqttbox-tcp-process-success.png)
 
-It is not difficult to find that the result received by MQTTBOX via the topic `t/hi` is consistent with the above analysis.
+It is not difficult to find that the result received by MQTTBox via the topic `t/hi` is consistent with the above analysis.
 
 In addition, we can observe the Baetyl's log and execute the command `docker ps` again to view the list of containers currently running on the system. The results are shown below.
 

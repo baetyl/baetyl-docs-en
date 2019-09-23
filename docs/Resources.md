@@ -44,11 +44,11 @@ MQTT.fx download link of BOS：
 | Windows(exe) | x86_64 | 4adfbb0eee65273bead6ce9885cf064de72d00d437bbaf3b9ff5236634fb6057 | [Download](https://baetyl.cdn.bcebos.com/mqttfx/mqttfx-1.7.1-windows-x64.exe) |
 | Darwin(dmg)  | x86_64 | 544b6ac0afefb80b5a56c2a6f2411f999862fb8f0f20502c912f28a9d1aa3b4a | [Download](https://baetyl.cdn.bcebos.com/mqttfx/mqttfx-1.7.1-macos.dmg)       |
 
-### MQTTBOX download
+### MQTTBox download
 
 Official website：[http://workswithweb.com/html/mqttbox/downloads.html](http://workswithweb.com/html/mqttbox/downloads.html)
 
-MQTTBOX download link of BOS：
+MQTTBox download link of BOS：
 
 | OS               | SHA256                                                           | Download link                                                     |
 | ---------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------- |
