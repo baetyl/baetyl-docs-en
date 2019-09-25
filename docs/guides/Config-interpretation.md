@@ -2,10 +2,17 @@
 
 Supported units:
 
-- Size unit: b(byte), k(kilobyte), m(megabyte), g(gigabyte)
-- Time unit: s(second), m(minute), h(hour)
+- Size unit
+  - b(byte)
+  - k(kilobyte)
+  - m(megabyte)
+  - g(gigabyte)
+- Time unit
+  - s(second)
+  - m(minute) 
+  - h(hour)
 
-Configuration examples can be found in the `example` directory of this project.
+Configuration examples can be found in the `example` directory of [baetyl project](https://github.com/baetyl/baetyl).
 
 ## Master Configuration
 
@@ -78,7 +85,12 @@ volumes: Storage volume list
     path: [MUST] The path of the storage volume on the host, relative to the working directory of the Master
 ```
 
-## baetyl-agent Configuration
+## Module Configuration
+
+
+The default configuration file for the module configuration is `etc/baetyl/service.yml` in the working directory.
+
+### baetyl-agent
 
 ```yaml
 remote:
@@ -106,7 +118,7 @@ remote:
     topic: The template of desire topic. No configuration required
 ```
 
-## baetyl-hub Configuration
+### baetyl-hub
 
 ```yaml
 listen: [MUST] Listening address, for example
@@ -186,7 +198,7 @@ shutdown: Service exit configuration
   timeout: The default value is `10m`, means timeout of service exit.
 ```
 
-## baetyl-function-manager Configuration
+### baetyl-function-manager Configuration
 
 ```yaml
 hub:
@@ -229,7 +241,7 @@ functions:
     timeout: The default value is `30s`, Client connection function instance timeout
 ```
 
-## baetyl-function-python Configuration
+## baetyl-function-python
 
 ```yaml
 # the configurations of the two modules are the same, so we can follow this sample below
@@ -261,7 +273,7 @@ logger: Logger configuration
     max: The default value is `15`, the maximum number of log files to keep.
 ```
 
-## baetyl-remote-mqtt Configuration
+### baetyl-remote-mqtt
 
 ```yaml
 hub:
@@ -321,7 +333,7 @@ logger: Logger configuration
     max: The default value is `15`, the maximum number of log files to keep.
 ```
 
-## baetyl-timer Configuration
+### baetyl-timer
 
 ```yaml
 hub: Hub configuration
