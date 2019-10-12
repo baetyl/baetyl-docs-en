@@ -145,3 +145,7 @@ sudo apt-get install ca-certificates
 ```
 
 For other systems, please check the relevant installation operations yourself.
+
+**Q19：Prompt "permission denied" error when starting Baetyl in CentOS7: "container (0054b7d0da0f) [agent][agent] failed to load config: open etc/baetyl/service.yml: permission denied" Or "container (0054b7d0da0f) failed to parse log level (), use default level (info)[agent][agent] service is stopped with error: open etc/baetyl/service.yml: permission denied"**
+
+**Suggested Solution**：Typically, permissions issues with a host volume mount are caused by selinux, Docker 19.03 version has fixed this problem. Users can upgrade to 19.03 or above by referring to [docker.com/install](https://docs.docker.com/install/linux/docker-ce/centos/).
