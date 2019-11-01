@@ -51,11 +51,15 @@ systemctl start docker
 
 **Q6: Found "failed to create master: Error response from daemon: client version 1.39 is too new. Maximum supported API version is 1.38" when Baetyl start.**
 
-**Suggested Solution**: Workaround is to pass API version via environment variable:
+**Suggested Solution**: 
 
-`DOCKER_API_VERSION=1.38`
+- If the version of Baetyl is equal to or greater than 1.0.0, to set API version in the configuration file (`etc/baetyl/conf.yml`) of Baetyl:
 
-For example:
+```yaml
+docker:
+  api_version: 1.38
+```
+- If less than 1.0.0, to set environment variable `DOCKER_API_VERSION=1.38`, for example:
 
 ```shell
 sudo vim ~/.bash_profile
@@ -75,14 +79,14 @@ source ~/.bash_profile
 
 **Suggested Solution**: Currently, we recommend changing configurations through the BIE Cloud Management Suite, but you can also manually change the configuration file on the core device and then restart Baetyl to take effect.
 
-**Q10：I download MQTTBox client, extract it to a directory, and copy/move the executable file `MQTTBox` to `/usr/local/bin`(other directory is similar, such as `/usr/bin`, `/bin`, `/usr/sbin`, etc.). But it reports an error of "error while loading shared libraries: libgconf-2.so.4: cannot open shared object file: No such file or directory` when `MQTTBox" start.**
+**Q10: I download MQTTBox client, extract it to a directory, and copy/move the executable file `MQTTBox` to `/usr/local/bin`(other directory is similar, such as `/usr/bin`, `/bin`, `/usr/sbin`, etc.). But it reports an error of "error while loading shared libraries: libgconf-2.so.4: cannot open shared object file: No such file or directory` when `MQTTBox" start.**
 
-**Suggested Solution**：As above description, this is because the lack of `libgconf-2.so.4` library when `MQTTBox` start, and the recommended use is as follows:
+**Suggested Solution**: As above description, this is because the lack of `libgconf-2.so.4` library when `MQTTBox` start, and the recommended use is as follows:
 
 - Step 1: Download and extract the MQTTBox software package;
 - Step 2: `cd /pat/to/MQTTBox/directory and sudo chmod +x MQTTBox`;
-- Step 3：`sudo ln -s /path/to/MQTTBox /usr/local/bin/MQTTBox`;
-- Step 4：Open terminal and execute the command `MQTTBox`.
+- Step 3: `sudo ln -s /path/to/MQTTBox /usr/local/bin/MQTTBox`;
+- Step 4: Open terminal and execute the command `MQTTBox`.
 
 **Q11: `localfunc` can't process the message, check `funclog` has the following error message:**
 
@@ -95,7 +99,7 @@ source ~/.bash_profile
 
 According to the above information, the actual error is judged, and the configuration is delivered from the cloud as needed, or by referring to [Configuration Analysis Document](guides/Config-interpretation.md) for verification and configuration.
 
-**Q12： How can i use BIE Cloud Management Suite with [CFC(Cloud Function Compute)](https://cloud.baidu.com/product/cfc.html)?**
+**Q12:  How can i use BIE Cloud Management Suite with [CFC(Cloud Function Compute)](https://cloud.baidu.com/product/cfc.html)?**
 
 **Suggested Solution**:
 
@@ -103,13 +107,13 @@ According to the above information, the actual error is judged, and the configur
 2. Make sure your CFC functions are published.
 3. Select `CFC function template` when volume create, more detailed contents please refer to [How-to-apply-volume-in-the-right-way](https://cloud.baidu.com/doc/BIE/s/Cjzdn8xig)
 
-**Q13： What‘s the relationship between the parameter ports and the parameter listen which in the hub configuration file?**
+**Q13:  What‘s the relationship between the parameter ports and the parameter listen which in the hub configuration file?**
 
 **Suggested Solution**:
 
 1. ports: Port exposed configuration in docker container mode.
 2. listen: Which address the hub module will listen on. In docker container mode, it's means container address. In native process mode, it's means host address.
-3. By referring to [Configuration Analysis Document](guides/Config-interpretation.md)
+3. By referring to [Configuration Analysis Document](guides/Config-interpretation.html#baetyl-hub)
 
 **Q14: How to process data in the cloud platform after message send to [Baidu IoT Hub](https://cloud.baidu.com/product/iot.html) by Baetyl?**
 
@@ -119,9 +123,9 @@ In the cloud platform, [the Rule Engine](https://cloud.baidu.com/product/re.html
 **Q15: How to connect the [Device management](https://cloud.baidu.com/doc/IOT/GettingStarted.html#.E5.88.9B.E5.BB.BA.E7.89.A9.E6.A8.A1.E5.9E.8B) of Baidu IoT Hub?**
 
 **Suggested Solution**:
-The Device management of Baidu IoT Hub does not support ssl authentication. As a temporary solution, you can configure [Remote Feature](guides/Message-synchronize-with-iothub-through-remote-module.md) to connect the Device management with username and password authentication manually.
+The Device management of Baidu IoT Hub does not support ssl authentication. As a temporary solution, you can configure [Remote Feature](guides/Message-synchronize-with-iothub-through-remote-service.md) to connect the Device management with username and password authentication manually.
 
-**Q16：If I don't want to lose messages and want to ensure all messages are synchronized to cloud, how can I do?**
+**Q16: If I don't want to lose messages and want to ensure all messages are synchronized to cloud, how can I do?**
 
 **Suggested Solution**:
 
@@ -145,7 +149,3 @@ sudo apt-get install ca-certificates
 ```
 
 For other systems, please check the relevant installation operations yourself.
-
-**Q19：Prompt "permission denied" error when starting Baetyl in CentOS7: "container (0054b7d0da0f) [agent][agent] failed to load config: open etc/baetyl/service.yml: permission denied" Or "container (0054b7d0da0f) failed to parse log level (), use default level (info)[agent][agent] service is stopped with error: open etc/baetyl/service.yml: permission denied"**
-
-**Suggested Solution**：Typically, permissions issues with a host volume mount are caused by selinux, Docker 19.03 version has fixed this problem. Users can upgrade to 19.03 or above by referring to [docker.com/install](https://docs.docker.com/install/linux/docker-ce/centos/).

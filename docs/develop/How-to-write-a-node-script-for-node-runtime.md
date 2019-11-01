@@ -1,6 +1,6 @@
 # How to write a javascript for Node runtime
 
-**Statement**：
+**Statement**: 
 
 - The operating system as mentioned in this document is Ubuntu16.04.
 - The version of runtime is Node8.5
@@ -126,7 +126,7 @@ function-sayjs-code/
 └── index.js
 ```
 
-More detailed configuration of Node runtime, please refer to [Node runtime configuration](../guides/Config-interpretation.md).
+More detailed configuration of Node runtime, please refer to [Node runtime configuration](../guides/Config-interpretation.html#baetyl-function-node).
 
 ## Parameter Convention
 
@@ -138,10 +138,10 @@ exports.handler = (event, context, callback) => {
 
 The Node runtime provided by Baetyl supports two parameters: `event` and `context`, which are described separately below.
 
-- **event**：Depend on the `Payload` in the MQTT message
+- **event**: Depend on the `Payload` in the MQTT message
     - If the original `Payload` is a json format data, then pass in the data handled by `json.loads(Payload)`
     - If the original `Payload` is Byte, string(not Json), then pass in the original `Payload`。
-- **context**：MQTT message context
+- **context**: MQTT message context
     - context.messageQOS // MQTT QoS
     - context.messageTopic // MQTT Topic
     - context.functionName // MQTT functionName
@@ -182,4 +182,4 @@ exports.handler = (event, context, callback) => {
 
 ![发送非字典类数据](../images/develop/write-node-script-none-dict.png)
 
-As above, for some general needs, we can implement it through the Node Standard Library. However, for some more complex demands, it is often necessary to import third-party libraries to complete. How to solve the problem? We've provided a general solution in [How to import third-party libraries for Node runtime](./How-to-import-third-party-libraries-for-node-runtime.md).
+As above, for some general needs, we can implement it through the Node Standard Library. However, for some more complex demands, it is often necessary to import third-party libraries to complete. How to solve the problem? We've provided a general solution in [How to import third-party libraries for Node runtime](How-to-import-third-party-libraries-for-node-runtime.md).

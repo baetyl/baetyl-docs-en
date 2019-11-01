@@ -127,7 +127,7 @@ function-sayhi-code/
 └── sayhi.py
 ```
 
-More detailed configuration of Python runtime, please refer to [Python runtime configuration](../guides/Config-interpretation.md).
+More detailed configuration of Python runtime, please refer to [Python runtime configuration](../guides/Config-interpretation.html#baetyl-function-python).
 
 ## Parameter Convention
 
@@ -139,10 +139,10 @@ def handler(event, context):
 
 The Python runtime provided by Baetyl supports two parameters: `event` and `context`, which are described separately below.
 
-- **event**：Depend on the `Payload` in the MQTT message
+- **event**: Depend on the `Payload` in the MQTT message
     - If the original `Payload` is a json format data, then pass in the data handled by `json.loads(Payload)`
     - If the original `Payload` is Byte, string(not Json), then pass in the original `Payload`。
-- **context**：MQTT message context
+- **context**: MQTT message context
     - context.messageQOS // MQTT QoS
     - context.messageTopic // MQTT Topic
     - context.functionName // MQTT functionName
@@ -181,4 +181,4 @@ def handler(event, context):
 
 ![Publish an non-dict format message](../images/develop/write-python-script-none-dict.png)
 
-As above, for some general needs, we can implement it through the Python Standard Library. However, for some more complex demands, it is often necessary to import third-party libraries to complete. How to solve the problem? We've provided a general solution in [How to import third-party libraries for Python runtime](./How-to-import-third-party-libraries-for-python-runtime.md).
+As above, for some general needs, we can implement it through the Python Standard Library. However, for some more complex demands, it is often necessary to import third-party libraries to complete. How to solve the problem? We've provided a general solution in [How to import third-party libraries for Python runtime](How-to-import-third-party-libraries-for-python-runtime.md).

@@ -17,7 +17,7 @@ Baetyl, extend cloud computing, data and service seamlessly to edge devices.
    BAETYL Home <https://baetyl.io/en/>
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Overview
 
    overview/Whatis.md
@@ -25,24 +25,25 @@ Baetyl, extend cloud computing, data and service seamlessly to edge devices.
    overview/Contributing.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Installation
 
    install/Quick-Install.md
-   install/Build-from-Source.md
+   install/Install-from-source.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Guides
 
    guides/Config-interpretation.md
-   guides/Device-connect-to-hub-module.md
-   guides/Message-transfer-among-devices-with-hub-module.md
-   guides/Message-handling-with-function-module.md
-   guides/Message-synchronize-with-iothub-through-remote-module.md
+   guides/Device-connect-to-hub-service.md
+   guides/Message-transfer-among-devices-with-hub-service.md
+   guides/Message-handling-with-function-service.md
+   guides/Message-synchronize-with-iothub-through-remote-service.md
+   guides/Image-capturing-and-AI-model-inference-with-video-infer-service.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Development
 
    develop/How-to-write-a-python-script-for-python-runtime.md
@@ -53,25 +54,13 @@ Baetyl, extend cloud computing, data and service seamlessly to edge devices.
    develop/How-to-develop-a-customize-module.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Troubleshooting
 
    FAQ.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Resources
 
    Resources.md
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Release Information
-
-   releasenotes/Baetyl-0.1.6.md
-   releasenotes/Baetyl-0.1.5.md
-   releasenotes/Baetyl-0.1.4.md
-   releasenotes/Baetyl-0.1.3.md
-   releasenotes/Baetyl-0.1.2.md
-   releasenotes/Baetyl-0.1.1.md
-   releasenotes/Baetyl-0.1.0.md
