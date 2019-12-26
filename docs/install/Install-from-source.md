@@ -6,7 +6,7 @@ Compared to the quick installation of Baetyl, you can build Baetyl from source t
 
 - The Go tools and modules
 
-The minimum required go version is 1.12. Refer to [golang.org](https://golang.org/dl/) or [golang.google.cn](https://golang.google.cn/dl/) to download and install the Go tools. Now we use Go Modules to manage packages, you can refer [goproxy.cn](https://goproxy.cn) to enable the Go Modules.
+The minimum required go version is 1.12. Refer to [golang.org](https://golang.org/dl/) or [golang.google.cn](https://golang.google.cn/dl/) to download and install the Go tools. Now we use Go Modules to manage packages，you can refer [goproxy.baidu.com](https://goproxy.baidu.com/)  to set GOPROXY if needs.
 
 - The Docker Engine and Buildx
 
@@ -17,7 +17,7 @@ The minimum required Docker version is 19.03, because the Docker Buildx feature 
 Download the source code from [Baetyl Github](https://github.com/baetyl/baetyl).
 
 ```shell
-go get github.com/baetyl/baetyl
+git clone git@github.com:baetyl/baetyl.git
 ```
 
 ## Build Baetyl and modules
@@ -25,7 +25,6 @@ go get github.com/baetyl/baetyl
 Go into Baetyl project directory and build the Baetyl and all modules for build machine.
 
 ```shell
-cd $GOPATH/src/github.com/baetyl/baetyl
 # default platform and all modules
 make # make all
 ```
@@ -61,7 +60,6 @@ It is recommended use of officially released images in container mode. If you wa
 Go into Baetyl project directory and build the module images for build machine.
 
 ```shell
-cd $GOPATH/src/github.com/baetyl/baetyl
 # default platform and all modules
 make image
 # specify some modules
@@ -97,7 +95,6 @@ make image PLATFORMS="linux/amd64 linux/arm64" MODULES="agent hub" XFLAGS=--push
 Use the following command to install the Baetyl and example configuration to default path: `/usr/local`.
 
 ```shell
-cd $GOPATH/src/github.com/baetyl/baetyl
 sudo make install # install for docker mode with example configuration
 sudo make install MODE=native # install for native mode with example configuration
 ```
@@ -105,7 +102,6 @@ sudo make install MODE=native # install for native mode with example configurati
 Specify the installation path, such as installing into the `output` directory:
 
 ```shell
-cd $GOPATH/src/github.com/baetyl/baetyl
 make install PREFIX=output # for docker mode 
 make install MODE=native PREFIX=output # for native mode
 ```
