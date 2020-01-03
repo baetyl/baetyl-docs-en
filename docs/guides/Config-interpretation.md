@@ -436,9 +436,9 @@ timer: timer configuration
   interval: Timing interval
 publish:
   topic: The message topic published to the Hub.
-  payload: The payload(string structure)content uses golang template, currently supports two types of functions，Time and Rand. Time can be used to get the current date and time, Rand can be used to get random numbers. The writing format follows the go template. The key of the Map can be written arbitrarily. 
-  If you want to output a random integer of 0~m, fill value with {{.Rand.Intn m}}; if you want to output a random floating-point number of 0~m, fill value with {{.Rand. Float64n m}}; if you want to output a string (\" hello! \"), value is the string \" hello! \", if you want to print a timestamp, value is {{.Time.NowUnixNano}}.for example
-  "{\"timestamp\": {{.Time.NowUnixNano}},\"Rand.Intn\": {{.Rand.Intn 10}},\"Rand.Float64n\": {{.Rand.Float64n 60}},\"anyString\": \"inputString\"}"
+  payload: 'The payload content uses golang template, currently supports two types of functions: Time and Rand. Time can be used to get the current date and time, Rand can be used to get random numbers. For example: if set payload with
+  "{\"datetime\": {{.Time.Now}},\"timestamp\": {{.Time.NowUnix}},\"timestampNano\": {{.Time.NowUnixNano}},\"random1\": {{.Rand.Int}},\"random2\": {{.Rand.Int63}},\"random3\": {{.Rand.Intn 10}},\"random4\": {{.Rand.Float64}},\"random5\": {{.Rand.Float64n 60}},\"anyString\": \"inputString\"}",
+  it will output: {"datetime": 2020-01-03 10:01:40.4381073 +0000 UTC m=+20.018560801,"timestamp": 1578045700,"timestampNano": 1578045700438177900,"random1": 1618091568073368693,"random2": 448858416199438315,"random3": 4,"random4": 0.04151395666829934,"random5": 29.64961133775892,"anyString": "inputString"}'
 logger: Logger configuration
   path: The default is `empty` (none configuration), that is, it does not write to the file. If the path is specified, it writes to the file.
   level: The default value is `info`, log level, support `debug`、`info`、`warn` and `error`.
