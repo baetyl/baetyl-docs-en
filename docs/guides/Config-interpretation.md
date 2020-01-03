@@ -436,10 +436,8 @@ timer: timer configuration
   interval: Timing interval
 publish:
   topic: The message topic published to the Hub.
-  payload: The payload data, string data structures. The writing format follows the go template. The key of the Map can be written arbitrarily. 
-  If you want to output a random integer of 0~m, fill value with {{.rant.intn m}}; if you want to output a random floating-point number of 0~m, 
-  fill value with {{.rant.float64n m}}; if you want to output a random floating-point number of 0~m, fill value with {{.rant.float64n m}}; 
-  if you want to output a string (\" hello! \"), value is the string \" hello! \", if you want to print a timestamp, value is {{.time. NowUnixNano}}.for example
+  payload: The payload(string structure)content uses golang template, currently supports two types of functions，Time and Rand. Time can be used to get the current date and time, Rand can be used to get random numbers. The writing format follows the go template. The key of the Map can be written arbitrarily. 
+  If you want to output a random integer of 0~m, fill value with {{.Rand.Intn m}}; if you want to output a random floating-point number of 0~m, fill value with {{.Rand. Float64n m}}; if you want to output a string (\" hello! \"), value is the string \" hello! \", if you want to print a timestamp, value is {{.Time.NowUnixNano}}.for example
   "{\"timestamp\": {{.Time.NowUnixNano}},\"Rand.Intn\": {{.Rand.Intn 10}},\"Rand.Float64n\": {{.Rand.Float64n 60}},\"anyString\": \"inputString\"}"
 logger: Logger configuration
   path: The default is `empty` (none configuration), that is, it does not write to the file. If the path is specified, it writes to the file.
