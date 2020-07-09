@@ -14,53 +14,41 @@ Welcome to BAETYL's documentation!
 Baetyl, extend cloud computing, data and service seamlessly to edge devices.
 
 .. toctree::
-   BAETYL Home <https://baetyl.io/en/>
+   BAETYL Home Page <https://baetyl.io/zh/>
+   BAETYL v1 Documentation <https://baetyl.readthedocs.io/en/1.0.0/overview/Whatis.html>
 
 .. toctree::
    :maxdepth: 1
    :caption: Overview
 
-   overview/Whatis.md
-   overview/Design.md
-   overview/Contributing.md
+   overview/what-is.md
+   overview/architecture.md
+   overview/contact-us.md
 
 .. toctree::
    :maxdepth: 1
-   :caption: Installation
+   :caption: Quick Start
 
-   install/Quick-Install.md
-   install/Install-from-source.md
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Guides
-
-   guides/Config-interpretation.md
-   guides/Device-connect-to-hub-service.md
-   guides/Message-transfer-among-devices-with-hub-service.md
-   guides/Message-handling-with-function-service.md
-   guides/Message-synchronize-with-iothub-through-remote-service.md
-   guides/Image-capturing-and-AI-model-inference-with-video-infer-service.md
+   quickstart/test-env.md
+   quickstart/node-management.md
+   quickstart/application-deployment.md
+   quickstart/configuration-management.md
+   quickstart/node-pre-configured.md
 
 .. toctree::
    :maxdepth: 1
-   :caption: Development
+   :caption: Best Practices
 
-   develop/How-to-write-a-python-script-for-python-runtime.md
-   develop/How-to-write-a-node-script-for-node-runtime.md
-   develop/How-to-import-third-party-libraries-for-python-runtime.md
-   develop/How-to-import-third-party-libraries-for-node-runtime.md
-   develop/How-to-develop-a-customize-runtime-for-function.md
-   develop/How-to-develop-a-customize-module.md
+   practice/application-deployment-practice.md
 
 .. toctree::
    :maxdepth: 1
-   :caption: Troubleshooting
-
-   FAQ.md
+   :caption: Develop Guides
+   
+   develop/api.md
 
 .. toctree::
    :maxdepth: 1
-   :caption: Resources
+   :caption: Support
 
-   Resources.md
+   support/faq.md
