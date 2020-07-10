@@ -1,5 +1,5 @@
 # FAQ
-#### Q: Practice of application deployment under Mac system--when deploying mosquitto broker application, the status of user application broker shows that it has been deployed. When connecting to the edge device using mqtt.box, I encountered a Connection Error, what is the reason? 
+#### Q: Practice of application deployment under Mac system, when deploying mosquitto broker application, the status of user application broker shows that it has been deployed. When connecting to the edge device using mqtt.box, I encountered a Connection Error, what is the reason? 
 
 **A:**  Because the host port mapping cannot work normally under Mac systems, it will cause mqtt.box connection failure.
 
