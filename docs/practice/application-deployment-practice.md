@@ -1,27 +1,33 @@
-# 应用部署实践(Chinese)
+# Practice of Application Deployment
 
-通过云端创建应用并部署至边缘设备上，需要完成 **节点创建，节点安装，应用创建，应用节点匹配** 等操作。其中，节点安装可以在应用创建并匹配节点之前或之后完成。应用与节点匹配则是通过为应用配置和节点标签相同的“匹配标签”实现（需要注意与应用标签并不相同）。通过该方式，一个应用可以匹配到多个节点，一个节点也可以关联多个应用。云端基于“匹配标签”监测目标节点，对于所有满足匹配条件的节点执行应用部署。支持多标签匹配，多标签之间是“与”的关系。
-应用分为容器应用和函数应用，以容器应用为例，一个应用包含有服务配置，数据卷，镜像仓库凭证，匹配节点标签等。一个应用可以包含有多个服务，但推荐一个应用仅包含一个服务。一个服务需要对服务的端口，副本数量等进行配置，此外也可能需要对服务所使用的配置文件，相关数据等进行管理。
-以在边缘设备部署一个mosquitto broker应用为例，应用中包含有一个broker的服务，服务所使用的配置文件数据卷，匹配应用标签等。
+To create applications through the cloud and deploy them to edge devices, operations such as node creation, node installation, application creation and application node matching should be completed. Node installation can be completed before or after the application creation and node matching.
+Application and node matching is achieved by configuring the application with the same "match label" specified by selector field as the node label (note that it is not the same as the application label). In this way, an application can be matched to more than one node, and a node can be associated with more than one application. 
+The cloud monitors the target node based on the "match label" and performs application deployment for all nodes that meet the matching criteria. Multiple labels matching is also supported with "and" relationships between multiple labels. Applications are divided into container applications and function applications. 
+Take container applications as an example, an application contains service configuration, data volume, mirror repository credentials, matching node labels, etc. An application may contain multiple services, but it is recommended that an application contain only one service. A service needs to configure the port, the number of copies, etc. In addition, it may also need to manage the configuration files and related data used by the service. We will deploy a Mosquitto Broker app at the edge device, which contains a Broker's service, configuration used by application, matches labels, and more.
 
-## 创建节点
-依次点击 **边缘节点 > 创建节点** 打开创建节点页面，输入节点名，描述信息，添加节点标签  **node=node-1**
+## Create Node
+Open Postman, then set Content-type to application/json in Headers. Add node name,description and labels to the body. Please note the labels **node=node-1** since it will be used later in application creation. Cloud service address is provided in [test environment](https://docs.baetyl.io/zh_CN/latest/quickstart/test-env.html). **api/iot2/baetyl** is used as the prefix. Refer to OpenAPI [Node Management/Create Node](https://docs.baetyl.io/en/latest/_static/api.html#u521bu5efau8282u70b90a3ca20id3d22u521bu5efau8282u70b9223e203ca3e) for detail usage information. In here，address is https://106.12.34.129:30494/api/iot2/baetyl/v1/nodes. Choose POST method and the body to send is shown as below
+```
+{
+    "name":"node-1",
+    "description": "test node-1",
+    "labels":{
+        "node":"node-1"
+    }
+}
+```
+![create node 1](../images/practice/application-deployment/01-create-node-1.png)
 
-![创建节点1](../images/practice/application-deployment/01-create-node-1.png)
+Click Send to view the returned result and confirm that the node has been successfully created.
 
-点击确定，返回节点列表页查看该节点已创建
+![create node 2](../images/practice/application-deployment/02-create-node-2.png)
 
-![创建节点2](../images/practice/application-deployment/02-create-node-2.png)
+## Create Configuration
 
-## 创建配置
-
-* broker配置
-
-选择菜单栏的配置管理， 在配置项栏点击创建配置项，创建应用所使用的的配置，配置名为 **broker-conf** , 选择添加配置数据，变量名为mosquitto.conf，即服务运行时所加载的配置文件名字，变量值即为配置文件内容。
-
-![broker配置](../images/practice/application-deployment/03-node-broker-conf.png)
-
-（变量值）文件内容如下，具体配置项说明可以参考 [mosquitto配置](https://mosquitto.org/man/mosquitto-conf-5.html)，主要配置了mqtt broker开放1883端口，数据存储路径等
+* broker configuration
+  
+Start by creating the configuration used by application. The configuration data contains multiple key-value pairs. The key is the file name and the value is the file content used when the service is loaded.
+In here, data key is mosquitto.conf. data value (file content) is shown as below. Refer to [mosquitto config](https://mosquitto.org/man/mosquitto-conf-5.html) for more information. It mainly sets 1883 port to expose, data storage path and so on.
 ```
 port 1883
 autosave_interval 180
@@ -35,73 +41,105 @@ log_dest file /mosquitto/log/mosquitto.log
 allow_anonymous true
 ```
 
-点击确定返回配置列表查看该配置项已创建
+Set Content-type to application/json in Headers then choose POST method. Body to send is shown as below
+```
+{
+    "name": "broker-conf-1",
+    "description": "broker conf",
+    "data": [
+                {
+                    "key": "mosquitto.conf",
+                    "value": {
+                        "type": "kv",
+                        "value": "port 1883\nautosave_interval 180\nautosave_on_changes true\npersistence true\npersistence_file mosquitto.db\npersistence_location /mosquitto/data/\nlog_type all\nconnection_messages true\nlog_dest file /mosquitto/log/mosquitto.log\nallow_anonymous true"
+                    }
+                }
+            ]
+}
+```
+Address is http://106.12.34.129:30494/api/iot2/baetyl/v1/configs. Refer to OpenAPI [Configuration Management/Create Configuration](https://docs.baetyl.io/en/latest/_static/api.html#u521bu5efau914du7f6eu98790a3ca20id3d22u521bu5efau914du7f6eu9879223e203ca3e) for detail usage information.
 
-![配置列表](../images/practice/application-deployment/04-conf-list.png)
+![broker config](../images/practice/application-deployment/03-create-conf-1.png)
 
-## 创建应用
+Click Send to view the returned results and confirm that the configuration has been successfully created. Besides, please record the name of the configuration and the version information returned, which is needed to create the application.
 
-创建应用包含有4个步骤，第一步基本信息是对添加应用配置名字与标签等基本信息；第二步是对应用所包含的服务模块进行配置，不仅包括服务启动的端口，副本数量等参数，也包括服务所使用的配置文件，镜像仓库凭证等；第三步是对应匹配的标签进行配置（需要注意匹配标签与第一步所配置的标签并不相同），通过配置与期望部署节点相同的匹配标签项，可以将应用与节点进行匹配，从而达到将应用部署到期望边缘设备的目标；第四步是对应用创建进行确认，完成应用的创建。
+![configuration list](../images/practice/application-deployment/04-create-conf-2.png)
 
-依次点击 **应用部署 > 创建应用**。在添加应用的第1步基本信息中输入应用名称，描述信息，添加应用标签（可选），然后点击下一步
+## Create Application
+There are several important parts to creating an application. The first is the information about the application itself, including the application name, the ports involved in the application, boot parameters and other informations. The second is the configuration used by the application, image repository credentials, and so on. The third matching labels. By configuring matching label that are the same as the expected deployment node, the application can be matched with the node, so as to achieve the goal of deploying the application to the expected edge device.
 
-![创建应用1](../images/practice/application-deployment/05-create-application-1.png)
+Set Content-type to application/json in Headers and choose POST method, body to send is shown as below. Please note the selector field which is same as the node labels previously.
+```
+{
+  "name": "broker-1",
+  "selector": "node=node-1",
+  "description": "mosquitto broker",
+  "services": [
+    {
+      "name":"broker",
+      "image":"eclipse-mosquitto:1.6.9",
+      "replica":1,
+      "volumeMounts": [
+        {
+          "name": "conf",
+          "mountPath": "/mosquitto/config",
+          "readOnly": true
+        }
+      ],
+      "ports": [
+        {
+          "hostPort": 1883,
+          "containerPort": 1883,
+          "protocol": "TCP"
+        }
+      ]
+    }
+  ],
+  "volumes": [
+    {
+      "name": "conf",
+      "config": {
+        "name": "broker-conf-1",
+        "version": "17966929"
+      }
+    }
+  ]
+}
+```
+The version of the configuration refered by **volumes[0].config.version** in the body needs to be modified based on the version returned in the previous step. Address is http://106.12.34.129:30494/api/iot2/baetyl/v1/apps. Refer to [Application Management/Create Application](https://docs.baetyl.io/en/latest/_static/api.html#u65b0u5efau5e94u75280a3ca20id3d22u65b0u5efau5e94u7528223e203ca3e) for details.
 
-在第2步模块配置中点击 **添加容器服务**
 
-![应用添加服务1](../images/practice/application-deployment/06-application-add-service-1.png)
+![create app 1](../images/practice/application-deployment/05-create-app-1.png)
 
-在创建容器服务页面对应用进行配置，配置服务名称、镜像地址
+Click Send to view the returned result to verify that application has been successfully created.
+![create app 2](../images/practice/application-deployment/06-create-app-2.png)
 
-![应用添加服务2](../images/practice/application-deployment/07-application-add-service-2.png)
+## Node Installation
+Acquiring installation command is prerequisite for node installation. Set Content-type to applicaiton/json in Headers and choose GET method. The Address is http://106.12.34.129:30494/api/iot2/baetyl/v1/nodes/node-1/init, Refer to [Node Management/Node Installation](https://docs.baetyl.io/en/latest/_static/api.html#u83b7u53d6u5b89u88c5u547du4ee40a3ca20id3d22u83b7u53d6u5b89u88c5u547du4ee4223e203ca3e) for details.
 
-卷配置中对服务所使用的配置进行配置，关联之前创建的配置 **broker-conf**。点击 **添加卷** 输入卷名称conf, 卷类型选择配置项。配置项选择已创建的 **broker-conf**, 容器目录为/mosquitto/config，这是mosquitto应用启动后加载配置文件的路径，文件名为配置项中的配置名（在这里即为mosquitto.conf）。配置项的读写权限设置为只读类型。
+Click Send to get the result and copy it to your device and execute then.
 
-![应用添加配置](../images/practice/application-deployment/08-application-add-conf.png)
+![node installation 1](../images/practice/application-deployment/07-node-installation-1.png)
 
-端口配置项点击 **添加端口映射**，宿主机和容器内端口都使用 **1883**
+Since baetyl is based on k3s/k8s, when initialized, if k3s/k8s not installed on the device, you need to select the relevant components to install. There are **k3s+containerd** and **k3s+docker** two modes. After executing the command, you will be prompted to install k3s. You need to enter y to confirm the installation of k3s. Then you need to choose whether to install Containerd or Docker. Containerd will be installed if you type y and the mode of baetyl will be **k3s+containerd**, if you type n, then docker will be installed thus mode of baetyl is **k3s+docker**.
 
-![应用配置端口](../images/practice/application-deployment/09-application-configure-port.png)
+![node installation 2](../images/practice/application-deployment/08-node-installation-2.png)
 
-点击确定完成服务配置, 然后点击下一步
+![node installation 3](../images/practice/application-deployment/09-node-installation-3.png)
 
-在第3步目标设备页点击匹配标签，输入之前创建节点的标签键 **node** 和标签值 **node-1**，点击确定
+Check that the system application service is up and running. System application are in **baetyl-edge-system** namespace，including **baetyl-core** and **baetyl-function** two deployments，user applications are in **baetyl-edge** namespace. Confirming that the broker application in baetyl-edge namespace created previously is in Running status, indicating that the application has started normally.
 
-![应用添加标签1](../images/practice/application-deployment/10-application-add-labels-1.png)
+![node installation 4](../images/practice/application-deployment/10-node-installation-4.png)
 
-查看已匹配的节点为之前创建的节点 **node-1**
+To get the device stats, query device stats interface **/v1/nodes/:name/stats**. Set request address to http://106.12.34.129:30494/api/iot2/baetyl/v1/nodes/node-1/stats and choose GET method. Click Send to get the device stats. Device hardware and resource status are included in returned response. "ready" field means that the edge device is connected to the cloud.
 
-![应用添加标签2](../images/practice/application-deployment/11-application-add-labels-2.png)
+![node detail 1](../images/practice/application-deployment/11-query-node-stats-1.png)
 
-最后第4步点击创建完成应用创建，在应用列表查看该应用已创建。
+In addition, the return result contains the stats of all applications, and you can see that the status of user application **Broker** previously deployed is Running.
 
-![完成应用创建](../images/practice/application-deployment/12-application-list.png)
+![node detail 2](../images/practice/application-deployment/12-query-node-stats-2.png)
 
-## 节点安装
+Connect to edge devices using [MQTTBox](http://workswithweb.com/html/mqttbox/downloads.html) clients. The exposed port of the deployed MQTT Broker is 1883 and the subscribed topics are not restricted. Subscribe to the **test** topic and send a message to verify that the message is received, indicating that the MQTT Broker is up and running.
 
-点击左侧菜单栏边缘节点，点击已创建的节点 **node-1**，在节点详情页点击 **安装**，复制在线安装的命令，在边缘设备上执行该命令。
-
-![节点安装1](../images/practice/application-deployment/13-node-installation-1.png)
-
-由于baetyl运行基于k3s/k8s，初始化时，若设备上未安装，需要选择相关组件进行安装。有 **k3s+containerd** 和 **k3s+docker** 两种运行模式。执行命令后会提示安装k3s，需输入 y 确认安装k3s。然后需要选择安装containerd或者docker。 如果输入 y 则安装containerd，baetyl的运行模式为 **k3s+containerd**，如果输入 n 则安装docker, baetyl的运行模式为 **k3s+docker**。
-
-![节点安装2](../images/practice/application-deployment/14-node-installation-2.png)
-
-![节点安装3](../images/practice/application-deployment/15-node-installation-3.png)
-
-确认系统应用的服务已经启动并处于Running状态，其中系统应用位于 **baetyl-edge-system** 命名空间下，包括 **baetyl-core** 和 **baetyl-function**，用户应用位于 **baetyl-edge** 命名空间下, 确认之前所创建的broker应用为Running状态，表示应用已正常启动了。
-
-![节点安装4](../images/practice/application-deployment/16-node-installation-4.png)
-
-在节点详情页可以查看边缘设备与云端已处于连接转态，设备相关信息也已上报，可以在该页面查看设备硬件信息以及资源使用情况。这里需要手动刷新状态，默认20秒会上报一次状态，无需频繁刷新。
-
-![节点详情1](../images/practice/application-deployment/17-node-detail-1.png)
-
-点击左侧菜单栏的应用部署，可以查看应用部署情况以及应用资源使用情况，可以看到系统应用 **baetyl-core**、**baetyl-function** 和 用户应用 **broker** 的部署状态都是已部署，服务状态栏显示了3个应用各自的资源使用情况。
-
-![节点详情2](../images/practice/application-deployment/18-node-detail-2.png)
-
-使用mqtt.box客户端连接边缘设备，部署的mqtt broker开放端口为1883,对订阅主题不做限制，订阅test主题后往test主题发消息验证可以接收到消息，即说明 mqtt broker 已正常运行。
-
-![应用测试](../images/practice/application-deployment/19-application-test.png)
+![application test](../images/practice/application-deployment/13-application-test.png)
 
