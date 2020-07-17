@@ -20,11 +20,12 @@ This database mysql must pre-installed, [mysql download](https://dev.mysql.com/d
 -Install k8s/k3s
 
 This k3s must pre-installed.
+
 ```shell
 curl -sfL https://get.k3s.io | sh-
 ```
 also can use:
-```bash
+```shell
 curl -sfL https://docs.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn sh-
 ```
 
@@ -56,7 +57,7 @@ After the make command is completed, the baetyl-cloud main program will be gener
 
 ## baetyl-cloud configuration
 
-Please refer to [Configuration Interpretation](./Baetyl-cloud-config-interpretation.md) for baetyl-cloud configuration definition description.
+Please refer to [Configuration Interpretation](./baetyl-cloud-config-interpretation.md) for baetyl-cloud configuration definition description.
 Refer to the configuration interpretation to make related settings. The cloud.yml reference is as follows:
  ```shell
 activeServer:
@@ -130,29 +131,31 @@ You can refer to the certificate files in examples/charts/baetyl-cloud/certs/  a
 
 ## Run baetyl-cloud
 
-### Run baetyl-cloud in process mode
+There are three ways to run the baetyl-cloud.
 
-Run the baetyl-cloud by the following command:
+### 1. Deploy the baetyl-cloud in k8s
 
+Modify the database's configurations in examples/k8s/baetyl-cloud-configmap.yml, and run the following commands:
 ```shell
-cd output
-nohup ./baetyl-cloud -c ./cloud.yml> /dev/null &
+kubectl apply -f baetyl-cloud-configmap.yml
+kubectl apply -f baetyl-cloud-rabc.yml
+kubectl apply -f baetyl-cloud-deployment.yml
 ```
- After starting, you can access the openapi through http://127.0.0.1:9004, you can access the synchronization service through https://127.0.0.1:9005, and you can access the activation service through https://127.0.0.1:9003.
+Then you can through the `kubectl get pods | grep baetyl-cloud` command to see baetyl-cloud run status. If baetyl-cloud is running, you can access the API through http://127.0.0.1:9004. The API is [here](./api.md).
 
-### Start baetyl-cloud in mirror mode
+### 2. Start baetyl-cloud in mirror mode
 
 * Replace the database address in examples/charts/baetyl-cloud/conf/cloud.yml with database's address in preparation;
 * Replace examples/charts/baetyl-cloud/conf/k8s.yml with k8s/k3s configuration;
 * Copy the examples/charts/baetyl-cloud/ directory to the target deployed machine, and execute `helm install baetyl-cloud`. to install;
-* You can see the running status of the program through the `kubectl get po` command;
-* You can access openapi through http://0.0.0.0:30004, access the synchronization service through https://0.0.0.0:30005, and access the activation service through https://0.0.0.0:30003
+* You can see the running status of the program through the `kubectl get pods |grep baetyl-cloud` command;
+* You can access the API through http://0.0.0.0:30004. The API is [here](./api.md).
 
-### Make a mirror
+#### Make a mirror
 
 If you use container mode to run baetyl-cloud, we recommend using officially released official images. If you want to make your own image, you can use the commands provided below, but only if the Buildx function mentioned in the first preparation is turned on.
 
-Enter the baetyl-cloud project directory and execute `make image` to generate baetyl-cloud image.
+Go into the baetyl-cloud project directory and execute `make image` to generate baetyl-cloud image.
 
 ```shell
 make image
@@ -167,3 +170,13 @@ REPOSITORY    TAG          IMAGE ID         CREATED SIZE
 cloud       git-be2c5a9   d70a7faf5443    About an hour ago 40.7MB
 ```
 Modify the image configuration in examples/charts/baetyl-cloud/values.yaml, and use helm install command to deploy baetyl-cloud.
+
+### 3. Run baetyl-cloud in process mode
+
+Run the baetyl-cloud by the following commands:
+
+```shell
+cd output
+nohup ./baetyl-cloud -c ./cloud.yml> /dev/null &
+```
+ After started, you can access the API through http://127.0.0.1:9004. The API is [here](./api.md).
