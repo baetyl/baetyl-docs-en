@@ -133,7 +133,7 @@ You can refer to the certificate files in examples/charts/baetyl-cloud/certs/  a
 
 There are three ways to run the baetyl-cloud.
 
-### 1. Deploy the baetyl-cloud in k8s
+### 1. Deploy baetyl-cloud in k8s
 
 Modify the database's configurations in examples/k8s/baetyl-cloud-configmap.yml, and run the following commands:
 ```shell
@@ -143,7 +143,7 @@ kubectl apply -f baetyl-cloud-deployment.yml
 ```
 Then you can through the `kubectl get pods | grep baetyl-cloud` command to see baetyl-cloud run status. If baetyl-cloud is running, you can access the API through http://127.0.0.1:9004. The API is [here](./api.md).
 
-### 2. Start baetyl-cloud in mirror mode
+### 2. Start baetyl-cloud with helm
 
 * Replace the database address in examples/charts/baetyl-cloud/conf/cloud.yml with database's address in preparation;
 * Replace examples/charts/baetyl-cloud/conf/k8s.yml with k8s/k3s configuration;
@@ -161,7 +161,7 @@ nohup ./baetyl-cloud -c ./cloud.yml> /dev/null &
 ```
 After started, you can access the API through http://127.0.0.1:9004. The API is [here](./api.md).
  
-## Make a mirror
+## Make baetyl-cloud image
  
 If you use container mode to run baetyl-cloud, we recommend using officially released official images. If you want to make your own image, you can use the commands provided below, but only if the Buildx function mentioned in the first preparation is turned on.
 
