@@ -45,9 +45,10 @@ Baetyl, extend cloud computing, data and service seamlessly to edge devices.
    :maxdepth: 1
    :caption: Develop Guides
 
-   develop/quick-install-baetyl-cloud.md
-   develop/baetyl-cloud-config-interpretation.md
+   develop/install.md
+   develop/conf.md
    develop/api.md
+   develop/build.md
 
 .. toctree::
    :maxdepth: 1

@@ -1,31 +1,32 @@
-# Baetyl-cloud Configuration Interpretation
+# Configuration Interpretation
 
 ## baetyl-cloud configuration
 
 The default configuration file is `etc/baetyl/service.yml` in the working directory, and the configuration definition is as follows:
 
 ```yaml
+adminServer:
+  port: #The management server port
+
+nodeServer:
+  port: #The server port for edge-cloud synchronization
+  ca: #The server root ca certificate file
+  cert: #The server certificate file
+  key: #The Server certificate's key file
+
 activeServer:
   port: #The server port for device activate
   ca: #The server root ca certificate file
   cert: #The server certificate file
   key: #The Server certificate's key file
-adminServer:
-  port: #The management server port
-
-nodeServer:
-  port: #The server port for Edge-Cloud synchronization
-  ca: #The server root ca certificate file
-  cert: #The server certificate file
-  key: #The Server certificate's key file
 
 plugin: #In baetyl-cloud design, auth, lincese, pki, shadow, and model storage are implemented in the form of plug-ins, supporting customization
-  auth: #Authentication plugin, default: defaultauth 
-  license: #license plugin, defaultlicense is used by default
-  pki: #Certificate management plugin, default: defaultpki
-  shadow: #Shadow storage plugin, support database and kubernetes
-  modelStorage: # baetyl-cloud's CRD storage plugin, default: kubernetes
-  databaseStorage: #Database configuration, default: database
+  auth: #Authentication plugin, defaultauth is used by default, no authentication
+  license: #license plugin, defaultlicense is used by default, no license check.
+  pki: #Certificate management plugin, defaultpki is used by default, self-signed certificate.
+  shadow: #Shadow storage plugin, database is used by default.
+  modelStorage: #CRD storage plugin, kubernetes  is used by default.
+  databaseStorage: #Database configuration, database  is used by default.
 
 logger:
   filename: #Log file 
