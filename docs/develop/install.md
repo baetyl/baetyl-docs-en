@@ -132,7 +132,7 @@ cd scripts/demo/k8s
 kubectl apply -f .
 ```
 
-After the execution is successful, you can execute `kubectl get pods |grep baetyl-cloud` command to check the program running status, and then you can operate the baetyl-cloud API via http://0.0.0.0:30004.
+After the execution is successful, you can execute `kubectl get pods |grep baetyl-cloud` command to check the program running status, and then you can operate the baetyl-cloud API via *http://0.0.0.0:30004*.
 ### 3. Create and install edge node
 
 Call the RESTful API to create a node.
@@ -196,7 +196,7 @@ Install mysql database, and initialize the data as follows:
   # If the service is deployed on a non-local machine, please change the IP to the actual server IP address
   ```
 
-- Modify the database configuration in **conf/cloud.yml* *
+- Modify the database configuration in *conf/cloud.yml*
 
 ### 2. Source code compilation
 
@@ -215,7 +215,7 @@ nohup ../../../output/baetyl-cloud -c ./conf/cloud.yml > /dev/null &
 # After successful execution, it will return the successfully established baetyl-cloud process number
 ```
 
-After successful execution, you can operate baetyl-cloud API through http://0.0.0.0:9004.
+After successful execution, you can operate baetyl-cloud API via *http://0.0.0.0:9004*.
 ### 4. Create and install edge node
 
 Call the RESTful API to create a node.
