@@ -184,7 +184,7 @@ kubectl delete -f .
 
 Install mysql database, and initialize the data as follows:
 
-- Create 'baetyl-cloud' database and tables, see specific sql statement in : *scripts/sql/tables.sql*
+- Create 'baetyl_cloud' database and tables, see specific sql statement in : *scripts/sql/tables.sql*
 
 - Initialize table data, see specific sql statement in : *scripts/sql/data.sql*
 
@@ -206,7 +206,8 @@ Refer [Source code compilation](../develop/build.md)
 
 ```shell
 # Import k8s crd resources
-kubectl apply -f scripts/demo/native/crds.yml
+cd scripts/demo/native
+kubectl apply -f conf/crds.yml
 # Execute the following command, replace example in the conf/kubeconfig.yml file
 kubectl config view --raw
 # Execute the following command
