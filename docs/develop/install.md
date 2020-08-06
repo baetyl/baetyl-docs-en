@@ -111,12 +111,12 @@ helm delete baetyl-cloud
 
 Install mysql database, and initialize the data as follows:
 
-- Create 'baetyl_cloud' database and tables, see specific sql statements  in : *scripts/sql/tables.sql*
+- Create 'baetyl_cloud' database and tables, see specific sql statements in: *scripts/sql/tables.sql*
 
-- Initialize table data, see specific sql statements in : *scripts/sql/data.sql*
+- Initialize table data, see specific sql setatements in: *scripts/sql/data.sql*
 
   ```shell
-  # Note: modify the node-address and active-address in baetyl_system_config to the actual server address：
+  # Note: modify the node-address and active-address in baetyl_system_config to real server address：
   # For example, if the service is deployed locally, the address can be configured as follows：
   # node-address : https://0.0.0.0:30005
   # active-address : https://0.0.0.0:30003
@@ -184,16 +184,16 @@ kubectl delete -f .
 
 Install mysql database, and initialize the data as follows:
 
-- Create 'baetyl_cloud' database and tables, see specific sql statement in : *scripts/sql/tables.sql*
+- Create 'baetyl_cloud' database and tables, see specific sql statement in: *scripts/sql/tables.sql*
 
 - Initialize table data, see specific sql statement in : *scripts/sql/data.sql*
 
   ```shell
-  # Note: modify the node-address and active-address in baetyl_system_config to the actual server address：
+  # Note: modify the node-address and active-address in baetyl_system_config to real server address：
   # For example, if the service is deployed locally, the address can be configured as follows：
   # node-address : https://0.0.0.0:30005
   # active-address : https://0.0.0.0:30003
-  # If the service is deployed on a non-local machine, please change the IP to the actual server IP address
+  # If the service is deployed on a non-local machine, please change IP to real server IP
   ```
 
 - Modify the database configuration in *conf/cloud.yml*
