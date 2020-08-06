@@ -1,10 +1,10 @@
-# Baetyl-cloud installation
+# Installation
 
 ----
 
 ## Preparation
 
-- Install k8s/k3s
+- Install k8s or k3s
 
 ----
 
@@ -61,7 +61,7 @@ kubectl get pod
 kubectl logs -f baetyl-cloud-57cd9597bd-z62kb
 ```
 
-### 4. Create and install edge node
+### 4. Install edge node
 
 Call the RESTful API to create a node.
 
@@ -105,13 +105,13 @@ helm delete baetyl-cloud
 
 ----
 
-## K8s Installation
+## K8S Installation
 
 ### 1. Install database
 
 Install mysql database, and initialize the data as follows:
 
-- Create 'baetyl-cloud' database and tables, see specific sql statements  in : *scripts/sql/tables.sql*
+- Create 'baetyl_cloud' database and tables, see specific sql statements  in : *scripts/sql/tables.sql*
 
 - Initialize table data, see specific sql statements in : *scripts/sql/data.sql*
 
@@ -120,7 +120,7 @@ Install mysql database, and initialize the data as follows:
   # For example, if the service is deployed locally, the address can be configured as follows：
   # node-address : https://0.0.0.0:30005
   # active-address : https://0.0.0.0:30003
-  # If the service is deployed on a non-local machine, please change the IP to the actual server IP address
+  # If the service is deployed on a non-local machine, please change IP to real server IP
   ```
 
 - Modify the database configuration in *baetyl-cloud-configmap.yml*
@@ -133,7 +133,7 @@ kubectl apply -f .
 ```
 
 After the execution is successful, you can execute `kubectl get pods |grep baetyl-cloud` command to check the program running status, and then you can operate the baetyl-cloud API via *http://0.0.0.0:30004*.
-### 3. Create and install edge node
+### 3. Install edge node
 
 Call the RESTful API to create a node.
 
@@ -184,7 +184,7 @@ kubectl delete -f .
 
 Install mysql database, and initialize the data as follows:
 
-- Create 'baetyl-cloud' database and tables, see specific sql statement  in : *scripts/sql/tables.sql*
+- Create 'baetyl-cloud' database and tables, see specific sql statement in : *scripts/sql/tables.sql*
 
 - Initialize table data, see specific sql statement in : *scripts/sql/data.sql*
 
@@ -200,14 +200,13 @@ Install mysql database, and initialize the data as follows:
 
 ### 2. Source code compilation
 
-Refer [Source code compilation](../develop/build.html)
+Refer [Source code compilation](../develop/build.md)
 
 ### 3. Install baetyl-cloud
 
 ```shell
 # Import k8s crd resources
-kubectl apply -f scripts/demo/native/conf/crds.yml
-cd scripts/demo/native
+kubectl apply -f scripts/demo/native/crds.yml
 # Execute the following command, replace example in the conf/kubeconfig.yml file
 kubectl config view --raw
 # Execute the following command
@@ -216,7 +215,7 @@ nohup ../../../output/baetyl-cloud -c ./conf/cloud.yml > /dev/null &
 ```
 
 After successful execution, you can operate baetyl-cloud API via *http://0.0.0.0:9004*.
-### 4. Create and install edge node
+### 4. Install edge node
 
 Call the RESTful API to create a node.
 
