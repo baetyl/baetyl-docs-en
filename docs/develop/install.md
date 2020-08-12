@@ -4,20 +4,62 @@
 
 ## Preparation
 
-- Install k8s or k3s
+- Install k8s or k3s. For the introduction of k8s, please refer to [kubernetes official website](https://kubernetes.io).
+
+## Statement
+
+- The k8s related informations used in this article are as follows:
+```
+// kubectl version
+Client Version: version.Info{Major:"1", Minor:"17", GitVersion:"v1.17.3", GitCommit:"06ad960bfd03b39c8310aaf92d1e7c12ce618213", GitTreeState:"clean", BuildDate:"2020-02-11T18:14:22Z", GoVersion:"go1.13.6", Compiler:"gc", Platform:"darwin/amd64"}
+Server Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.5", GitCommit:"20c265fef0741dd71a66480e35bd69f18351daea", GitTreeState:"clean", BuildDate:"2019-10-15T19:07:57Z", GoVersion:"go1.12.10", Compiler:"gc", Platform:"linux/amd64"}
+```
+
+- The baetyl-cloud related informations used in this article are as follows:
+```
+// git log
+commit 6d96271e24dbd4d5bb5f3e0509c2af7d085676af
+Author: chensheng <chensheng06@baidu.com>
+Date:   Tue Aug 11 15:54:26 2020 +0800
+
+    fix cert error (#50)
+```
+
+Because the baetyl-cloud code is rapidly iterating, the latest code cannot be adapted in real time. So users need to switch to this version after downloading the baetyl-cloud code:
+```shell script
+git reset --hard 6d96271e24dbd4
+```
+In addition, this article will be updated regularly to adapt to the latest baetyl-cloud code.
 
 ----
 
 ## Helm Quick Installation
+
+This article supports using helm v2/v3 for installation. The relevant version information during testing is as follows:
+```
+// helm v3: helm version
+version.BuildInfo{Version:"v3.2.3", GitCommit:"8f832046e258e2cb800894579b1b3b50c2d83492", GitTreeState:"clean", GoVersion:"go1.13.12"}
+
+// helm v2: helm version
+Client: &version.Version{SemVer:"v2.16.9", GitCommit:"8ad7037828e5a0fca1009dabe290130da6368e39", GitTreeState:"clean"}
+Server: &version.Version{SemVer:"v2.16.9", GitCommit:"8ad7037828e5a0fca1009dabe290130da6368e39", GitTreeState:"clean"}
+```
+For the installation of helm, please refer to [helm installation link](https://helm.sh/docs/intro/install).
 
 ### 1. Install database
 
 Before installing baetyl-cloud, we need to install the database first, and execute the following command to install it.
 
 ```shell
+// helm v3
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm install mariadb --set rootUser.password=secretpassword,db.name=baetyl_cloud bitnami/mariadb
 helm install phpmyadmin bitnami/phpmyadmin 
+
+// helm v2
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install --name mariadb --set rootUser.password=secretpassword,db.name=baetyl_cloud bitnami/mariadb
+helm install --name phpmyadmin bitnami/phpmyadmin 
 ```
 **Note**: For the convenience of demonstration, we have hardcoded the password, please modify it yourself, and you can replace secretpassword globally.
 
@@ -41,17 +83,38 @@ echo "phpMyAdmin URL: http://127.0.0.1:8080"
 kubectl port-forward --namespace default svc/phpmyadmin 8080:80
 ```
 
-Then use a browser to open http://127.0.0.1:8080/index.php, Server input: mariadb, Username input: root, Password input: secretpassword. After logging in, select the database baetyl_cloud, click the SQL button, and enter the sql statements of all files in the scripts/sql directory under the baetyl-cloud project into the page for execution. If no error is reported during execution, the data initialization is successful.
+Then use a browser to open http://127.0.0.1:8080/index.php, Server input: mariadb, Username input: root, Password input: secretpassword. After logging in, select the database baetyl_cloud, click the SQL button, and enter tables.sql and data.sql in the scripts/sql directory under the baetyl-cloud project into the page for execution. If no error is reported during execution, the data initialization is successful. If you have installed before, please pay attention to delete the historical data under the baetyl-cloud database when installing again.
 
 ### 3. Install baetyl-cloud
 
-Enter the directory where the baetyl-cloud project is located and execute the following commands.
+For helm v3, enter the directory where the baetyl-cloud project is located and execute the following commands.
 
 ```shell
-# helm 3
+# helm v3
 helm install baetyl-cloud ./scripts/demo/charts/baetyl-cloud/
 ```
-Make sure that baetyl-cloud is in the Running state, and you can also check the log for errors.
+
+For helm v2, users need to do some additional operations in the above directories:
+
+- Modify the apiVersion version in ./scripts/demo/charts/baetyl-cloud/Chart.yaml from v2 to v1 and save it as follows:
+```yaml
+apiVersion: v1
+name: baetyl-cloud
+description: A Helm chart for Kubernetes
+
+...
+```
+- Import crds manually:
+```shell script
+kubectl apply -f ./scripts/demo/charts/baetyl-cloud/crds/
+```
+- use helm v2 to install baetyl-cloud:
+```shell script
+// helm v2
+helm install --name baetyl-cloud ./scripts/demo/charts/baetyl-cloud/
+```
+
+To make sure that baetyl-cloud is in the Running state, and you can also check the log for errors.
 
 ```shell
 kubectl get pod
