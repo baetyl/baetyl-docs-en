@@ -33,7 +33,6 @@ Baetyl, extend cloud computing, data and service seamlessly to edge devices.
    quickstart/node-management.md
    quickstart/application-deployment.md
    quickstart/configuration-management.md
-   quickstart/node-provision.md
 
 .. toctree::
    :maxdepth: 1
