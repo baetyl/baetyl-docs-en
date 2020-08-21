@@ -47,8 +47,5 @@ The basic functions provided by the cloud management suite in this project are a
      * Secrets
      * Certificates
      * Registry credentials
-* Node provisioning management
-     * Node batch management
-     * Registration and activation
 
 _The open source version contains the RESTful API of all the above functions, but does not include the front-end dashboard. _
