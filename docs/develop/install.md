@@ -91,12 +91,12 @@ For helm v3, enter the directory where the baetyl-cloud project is located and e
 
 ```shell
 # helm v3
-helm install baetyl-cloud ./scripts/demo/charts/baetyl-cloud/
+helm install baetyl-cloud ./scripts/charts/baetyl-cloud/
 ```
 
 For helm v2, users need to do some additional operations in the above directories:
 
-- Modify the apiVersion version in ./scripts/demo/charts/baetyl-cloud/Chart.yaml from v2 to v1 and save it as follows:
+- Modify the apiVersion version in ./scripts/charts/baetyl-cloud/Chart.yaml from v2 to v1 and save it as follows:
 ```yaml
 apiVersion: v1
 name: baetyl-cloud
@@ -106,12 +106,17 @@ description: A Helm chart for Kubernetes
 ```
 - Import crds manually:
 ```shell script
-kubectl apply -f ./scripts/demo/charts/baetyl-cloud/crds/
+# k8s version is v1.16 or higher 
+# k3s version is v1.17.4 or higher
+kubectl apply -f ./scripts/charts/baetyl-cloud/apply/
+# k8s version less than v1.16
+# k3s version less than v1.17.4
+kubectl apply -f ./scripts/charts/baetyl-cloud/apply_v1beta1/
 ```
 - use helm v2 to install baetyl-cloud:
 ```shell script
-// helm v2
-helm install --name baetyl-cloud ./scripts/demo/charts/baetyl-cloud/
+# helm v2
+helm install --name baetyl-cloud ./scripts/charts/baetyl-cloud/
 ```
 
 To make sure that baetyl-cloud is in the Running state, and you can also check the log for errors.
@@ -191,8 +196,13 @@ Install mysql database, and initialize the data as follows:
 ### 2. Install baetyl-cloud
 
 ```shell
-cd scripts/demo/k8s
-kubectl apply -f .
+cd scripts/k8s
+# k8s version is v1.16 or higher 
+# k3s version is v1.17.4 or higher
+kubectl apply -f ./apply/
+# k8s version less than v1.16
+# k3s version less than v1.17.4
+kubectl apply -f ./apply_v1beta1/
 ```
 
 After the execution is successful, you can execute `kubectl get pods |grep baetyl-cloud` command to check the program running status, and then you can operate the baetyl-cloud API via *http://0.0.0.0:30004*.
@@ -235,8 +245,13 @@ curl http://0.0.0.0:30004/v1/nodes/demo-node
 ### 4. Uninstall baetyl-cloud
 
 ```shell
-cd scripts/demo/k8s
-kubectl delete -f .
+cd scripts/k8s
+# k8s version is v1.16 or higher 
+# k3s version is v1.17.4 or higher
+kubectl delete -f ./apply/
+# k8s version less than v1.16
+# k3s version less than v1.17.4
+kubectl delete -f ./apply_v1beta1/
 ```
 
 ----
@@ -269,8 +284,15 @@ Refer [Source code compilation](../develop/build.md)
 
 ```shell
 # Import k8s crd resources
-cd scripts/demo/native
-kubectl apply -f conf/crds.yml
+cd scripts/native
+
+# k8s version is v1.16 or higher 
+# k3s version is v1.17.4 or higher
+kubectl apply -f ./apply/
+# k8s version less than v1.16
+# k3s version less than v1.17.4
+kubectl apply -f ./apply_v1beta1/
+
 # Execute the following command, replace example in the conf/kubeconfig.yml file
 kubectl config view --raw
 # Execute the following command
