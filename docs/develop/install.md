@@ -11,23 +11,19 @@
 - The k8s related informations used in this article are as follows:
 ```
 // kubectl version
-Client Version: version.Info{Major:"1", Minor:"17", GitVersion:"v1.17.3", GitCommit:"06ad960bfd03b39c8310aaf92d1e7c12ce618213", GitTreeState:"clean", BuildDate:"2020-02-11T18:14:22Z", GoVersion:"go1.13.6", Compiler:"gc", Platform:"darwin/amd64"}
-Server Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.5", GitCommit:"20c265fef0741dd71a66480e35bd69f18351daea", GitTreeState:"clean", BuildDate:"2019-10-15T19:07:57Z", GoVersion:"go1.12.10", Compiler:"gc", Platform:"linux/amd64"}
+Client Version: version.Info{Major:"1", Minor:"18", GitVersion:"v1.18.6", GitCommit:"dff82dc0de47299ab66c83c626e08b245ab19037", GitTreeState:"clean", BuildDate:"2020-07-15T23:30:39Z", GoVersion:"go1.14.4", Compiler:"gc", Platform:"darwin/amd64"}
+Server Version: version.Info{Major:"1", Minor:"18", GitVersion:"v1.18.3", GitCommit:"2e7996e3e2712684bc73f0dec0200d64eec7fe40", GitTreeState:"clean", BuildDate:"2020-05-20T12:43:34Z", GoVersion:"go1.13.9", Compiler:"gc", Platform:"linux/amd64"}
 ```
 
 - The baetyl-cloud related informations used in this article are as follows:
 ```
 // git log
-commit 6d96271e24dbd4d5bb5f3e0509c2af7d085676af
-Author: chensheng <chensheng06@baidu.com>
-Date:   Tue Aug 11 15:54:26 2020 +0800
-
-    fix cert error (#50)
+commit be8687f858b5c70d8dcdd55a120949fd64668588
 ```
 
 Because the baetyl-cloud code is rapidly iterating, the latest code cannot be adapted in real time. So users need to switch to this version after downloading the baetyl-cloud code:
 ```shell script
-git reset --hard 6d96271e24dbd4
+git reset --hard be8687f858b5c70d8dcdd55a120949fd64668588
 ```
 In addition, this article will be updated regularly to adapt to the latest baetyl-cloud code.
 
@@ -83,7 +79,7 @@ echo "phpMyAdmin URL: http://127.0.0.1:8080"
 kubectl port-forward --namespace default svc/phpmyadmin 8080:80
 ```
 
-Then use a browser to open http://127.0.0.1:8080/index.php, Server input: mariadb, Username input: root, Password input: secretpassword. After logging in, select the database baetyl_cloud, click the SQL button, and enter tables.sql and data.sql in the scripts/sql directory under the baetyl-cloud project into the page for execution. If no error is reported during execution, the data initialization is successful. If you have installed before, please pay attention to delete the historical data under the baetyl-cloud database when installing again.
+Then use a browser to open http://127.0.0.1:8080/index.php, Server input: mariadb, Username input: root, Password input: secretpassword. After logging in, select the database baetyl_cloud, click the SQL button, and apply *scripts/common/tables.sql* and *scripts/native/sql/data.sql* under the baetyl-cloud project into the page for execution. If no error is reported during execution, the data initialization is successful. If you have installed before, please pay attention to delete the historical data under the baetyl-cloud database when installing again.
 
 ### 3. Install baetyl-cloud
 
@@ -142,16 +138,16 @@ Obtain the online installation script of the edge node.
 
 ```shell
 curl http://0.0.0.0:30004/v1/nodes/demo-node/init
-# {"cmd":"curl -skfL 'https://0.0.0.0:30003/v1/active/setup.sh?token=f6d21baa9b7b2265223a333630302c226b223a226e6f6465222c226e223a2264656d6f2d6e6f6465222c226e73223a2262616574796c2d636c6f7564222c227473223a313539353430323132367d' -osetup.sh && sh setup.sh"}
+# {"cmd":"sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete clusterrolebinding baetyl-edge-system-rbac --ignore-not-found=true && kubectl delete ns baetyl-edge-system --ignore-not-found=true && kubectl apply -f init.yml"}
 ```
 
 Execute the installation script on the machine where baetyl-cloud is deployed.
 
 ```shell
-curl -skfL 'https://0.0.0.0:30003/v1/active/setup.sh?token=f6d21baa9b7b2265223a333630302c226b223a226e6f6465222c226e223a2264656d6f2d6e6f6465222c226e73223a2262616574796c2d636c6f7564222c227473223a313539353430323132367d' -osetup.sh && sh setup.sh
+sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete clusterrolebinding baetyl-edge-system-rbac --ignore-not-found=true && kubectl delete ns baetyl-edge-system --ignore-not-found=true && kubectl apply -f init.yml
 ```
 
-**Note**: If you need to install an edge node on a device other than the machine where baetyl-cloud is deployed, please modify the database, change the node-address and active-address in the baetyl_system_config table to real addresses.
+**Note**: If you need to install an edge node on a device other than the machine where baetyl-cloud is deployed, please modify the database, change the sync-server-address and init-server-address in the baetyl_property  table to real addresses.
 
 Check the status of the edge node. Eventually, two edge services will be in the Running state. You can also call the cloud RESTful API to view the edge node status. You can see that the edge node is online ("ready":true).
 
@@ -169,6 +165,8 @@ curl http://0.0.0.0:30004/v1/nodes/demo-node
 
 ```shell
 helm delete baetyl-cloud
+# delete baetyl
+kubectl delete ns baetyl-edge baetyl-edge-system
 ```
 
 ----
@@ -179,19 +177,27 @@ helm delete baetyl-cloud
 
 Install mysql database, and initialize the data as follows:
 
-- Create 'baetyl_cloud' database and tables, see specific sql statements in: *scripts/sql/tables.sql*
+- Create 'baetyl_cloud' database and tables, see specific sql statements in: *scripts/common/tables.sql*
 
-- Initialize table data, see specific sql setatements in: *scripts/sql/data.sql*
+- Initialize table data, see specific sql setatements in: **scripts/k8s/sql/data.sql*
 
   ```shell
-  # Note: modify the node-address and active-address in baetyl_system_config to real server address：
+  # Note: modify the sync-server-address and init-server-address in baetyl_property to real server address：
   # For example, if the service is deployed locally, the address can be configured as follows：
-  # node-address : https://0.0.0.0:30005
-  # active-address : https://0.0.0.0:30003
+  # sync-server-address : https://host ip:30005
+  # init-server-address : https://0.0.0.0:30003
   # If the service is deployed on a non-local machine, please change IP to real server IP
   ```
 
 - Modify the database configuration in *baetyl-cloud-configmap.yml*
+
+  ```
+  database:
+  type: "mysql"
+  url:"root:secretpassword@(host ip:3306)/baetyl_cloud?charset=utf8&parseTime=true"
+  ```
+
+  
 
 ### 2. Install baetyl-cloud
 
@@ -219,16 +225,16 @@ Obtain the online installation script of the edge node.
 
 ```shell
 curl http://0.0.0.0:30004/v1/nodes/demo-node/init
-# {"cmd":"curl -skfL 'https://0.0.0.0:30003/v1/active/setup.sh?token=f6d21baa9b7b2265223a333630302c226b223a226e6f6465222c226e223a2264656d6f2d6e6f6465222c226e73223a2262616574796c2d636c6f7564222c227473223a313539353430323132367d' -osetup.sh && sh setup.sh"}
+# {"cmd":"sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete clusterrolebinding baetyl-edge-system-rbac --ignore-not-found=true && kubectl delete ns baetyl-edge-system --ignore-not-found=true && kubectl apply -f init.yml"}
 ```
 
 Execute the installation script on the machine where baetyl-cloud is deployed.
 
 ```shell
-curl -skfL 'https://0.0.0.0:30003/v1/active/setup.sh?token=f6d21baa9b7b2265223a333630302c226b223a226e6f6465222c226e223a2264656d6f2d6e6f6465222c226e73223a2262616574796c2d636c6f7564222c227473223a313539353430323132367d' -osetup.sh && sh setup.sh
+sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:30003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete clusterrolebinding baetyl-edge-system-rbac --ignore-not-found=true && kubectl delete ns baetyl-edge-system --ignore-not-found=true && kubectl apply -f init.yml
 ```
 
-**Note**: If you need to install an edge node on a device other than the machine where baetyl-cloud is deployed, please modify the database, change the node-address and active-address in the baetyl_system_config table to real addresses.
+**Note**: If you need to install an edge node on a device other than the machine where baetyl-cloud is deployed, please modify the database, change the  sync-server-address and init-server-address  in the baetyl_property table to real addresses.
 
 Check the status of the edge node. Eventually, two edge services will be in the Running state. You can also call the cloud RESTful API to view the edge node status. You can see that the edge node is online ("ready":true).
 
@@ -252,6 +258,8 @@ kubectl delete -f ./apply/
 # k8s version less than v1.16
 # k3s version less than v1.17.4
 kubectl delete -f ./apply_v1beta1/
+# delete baetyl
+kubectl delete ns baetyl-edge baetyl-edge-system
 ```
 
 ----
@@ -262,19 +270,27 @@ kubectl delete -f ./apply_v1beta1/
 
 Install mysql database, and initialize the data as follows:
 
-- Create 'baetyl_cloud' database and tables, see specific sql statement in: *scripts/sql/tables.sql*
+- Create 'baetyl_cloud' database and tables, see specific sql statement in: *scripts/common/tables.sql*
 
-- Initialize table data, see specific sql statement in : *scripts/sql/data.sql*
+- Initialize table data, see specific sql statement in : *scripts/native/sql/data.sql*
 
   ```shell
-  # Note: modify the node-address and active-address in baetyl_system_config to real server address：
+  # Note: modify the sync-server-address and init-server-address in baetyl_property to real server address：
   # For example, if the service is deployed locally, the address can be configured as follows：
-  # node-address : https://0.0.0.0:30005
-  # active-address : https://0.0.0.0:30003
+  # sync-server-address : https://host ip:30005
+  # init-server-address : https://0.0.0.0:30003
   # If the service is deployed on a non-local machine, please change IP to real server IP
   ```
 
-- Modify the database configuration in *conf/cloud.yml*
+- Modify the database configuration in *conf/conf.yml*
+
+  ```
+  database:
+  type: "mysql"
+  url:"root:secretpassword@(localhost:3306)/baetyl_cloud?charset=utf8&parseTime=true"
+  ```
+
+  
 
 ### 2. Source code compilation
 
@@ -296,7 +312,7 @@ kubectl apply -f ./apply_v1beta1/
 # Execute the following command, replace example in the conf/kubeconfig.yml file
 kubectl config view --raw
 # Execute the following command
-nohup ../../../output/baetyl-cloud -c ./conf/cloud.yml > /dev/null &
+nohup ../../../output/baetyl-cloud -c ./conf/conf.yml > /dev/null &
 # After successful execution, it will return the successfully established baetyl-cloud process number
 ```
 
@@ -306,24 +322,24 @@ After successful execution, you can operate baetyl-cloud API via *http://0.0.0.0
 Call the RESTful API to create a node.
 
 ```shell
-curl -d "{\"name\":\"demo-node\"}" -H "Content-Type: application/json" -X POST http://0.0.0.0:30004/v1/nodes
+curl -d "{\"name\":\"demo-node\"}" -H "Content-Type: application/json" -X POST http://0.0.0.0:9004/v1/nodes
 # {"namespace":"baetyl-cloud","name":"demo-node","version":"1931564","createTime":"2020-07-22T06:25:05Z","labels":{"baetyl-node-name":"demo-node"},"ready":false}
 ```
 
 Obtain the online installation script of the edge node.
 
 ```shell
-curl http://0.0.0.0:30004/v1/nodes/demo-node/init
-# {"cmd":"curl -skfL 'https://0.0.0.0:30003/v1/active/setup.sh?token=f6d21baa9b7b2265223a333630302c226b223a226e6f6465222c226e223a2264656d6f2d6e6f6465222c226e73223a2262616574796c2d636c6f7564222c227473223a313539353430323132367d' -osetup.sh && sh setup.sh"}
+curl http://0.0.0.0:9004/v1/nodes/demo-node/init
+# {"cmd":"sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:9003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete clusterrolebinding baetyl-edge-system-rbac --ignore-not-found=true && kubectl delete ns baetyl-edge-system --ignore-not-found=true && kubectl apply -f init.yml"}
 ```
 
 Execute the installation script on the machine where baetyl-cloud is deployed.
 
 ```shell
-curl -skfL 'https://0.0.0.0:30003/v1/active/setup.sh?token=f6d21baa9b7b2265223a333630302c226b223a226e6f6465222c226e223a2264656d6f2d6e6f6465222c226e73223a2262616574796c2d636c6f7564222c227473223a313539353430323132367d' -osetup.sh && sh setup.sh
+sudo mkdir -p -m 666 /var/lib/baetyl/host /var/lib/baetyl/object /var/lib/baetyl/store /var/lib/baetyl/log /var/lib/baetyl/run && curl -skfL 'https://0.0.0.0:9003/v1/init/baetyl-init-deployment.yml?token=b98c8499f57b2265223a313630323831393239382c226e223a22313233222c226e73223a2262616574796c2d636c6f7564227d' -oinit.yml && kubectl delete clusterrolebinding baetyl-edge-system-rbac --ignore-not-found=true && kubectl delete ns baetyl-edge-system --ignore-not-found=true && kubectl apply -f init.yml
 ```
 
-**Note**: If you need to install an edge node on a device other than the machine where baetyl-cloud is deployed, please modify the database, change the node-address and active-address in the baetyl_system_config table to real addresses.
+**Note**: If you need to install an edge node on a device other than the machine where baetyl-cloud is deployed, please modify the database, change the sync-server-address  and  init-server-address in the baetyl_property table to real addresses.
 
 Check the status of the edge node. Eventually, two edge services will be in the Running state. You can also call the cloud RESTful API to view the edge node status. You can see that the edge node is online ("ready":true).
 
@@ -333,7 +349,7 @@ kubectl get pod -A
 # baetyl-edge-system   baetyl-core-8668765797-4kt7r              1/1     Running   0          2m15s
 # baetyl-edge-system   baetyl-function-5c5748957-nhn88           1/1     Running   0          114s
 
-curl http://0.0.0.0:30004/v1/nodes/demo-node
+curl http://0.0.0.0:9004/v1/nodes/demo-node
 # {"namespace":"baetyl-cloud","name":"demo-node","version":"1939112",...,"report":{"time":"2020-07-22T07:25:27.495362661Z","sysapps":...,"node":...,"nodestats":...,"ready":true}
 ```
 
@@ -342,5 +358,7 @@ curl http://0.0.0.0:30004/v1/nodes/demo-node
 ```shell
 # Kill the process according to the process number when the creation is successful:
 sudo kill process number
+# delete baetyl
+kubectl delete ns baetyl-edge baetyl-edge-system
 ```
 
